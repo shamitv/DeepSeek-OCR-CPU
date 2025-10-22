@@ -6,11 +6,20 @@ This demonstrates the new enhanced extraction capabilities including:
 - Individual element extraction
 - Type-specific overlays
 - Structured JSON output
+
+Usage:
+    python pdf_demo_enhanced.py [PDF_PATH]
+    
+Examples:
+    python pdf_demo_enhanced.py
+    python pdf_demo_enhanced.py /path/to/document.pdf
+    python pdf_demo_enhanced.py test_files/pdf/my_document.pdf
 """
 
 from pathlib import Path
 from inference import process_pdf_enhanced
 import json
+import sys
 
 
 def main():
@@ -18,22 +27,41 @@ def main():
     print("Enhanced PDF Processing Demo")
     print("="*70)
     
-    # Find a test PDF
-    test_pdf_dir = Path("test_files/pdf")
-    pdf_files = list(test_pdf_dir.glob("*.pdf"))
+    # Check for command-line argument
+    if len(sys.argv) > 1:
+        # Use the provided PDF path
+        pdf_path = Path(sys.argv[1]).expanduser().resolve()
+        
+        if not pdf_path.exists():
+            print(f"\n✗ Error: PDF file not found: {pdf_path}")
+            return 1
+        
+        if not pdf_path.is_file() or pdf_path.suffix.lower() != '.pdf':
+            print(f"\n✗ Error: Not a PDF file: {pdf_path}")
+            return 1
+        
+        # Set output directory next to the PDF
+        output_dir = pdf_path.parent / f"{pdf_path.stem}_enhanced_outputs"
+        
+    else:
+        # Find a test PDF in test_files/pdf
+        test_pdf_dir = Path("test_files/pdf")
+        pdf_files = list(test_pdf_dir.glob("*.pdf"))
+        
+        if not pdf_files:
+            print("\nNo PDF files found in test_files/pdf/")
+            print("Please add a PDF file to test or provide a path:")
+            print("  python pdf_demo_enhanced.py /path/to/document.pdf")
+            return 1
+        
+        # Use the first PDF
+        pdf_path = pdf_files[0]
+        
+        # Set output directory
+        output_dir = test_pdf_dir / f"{pdf_path.stem}_enhanced_outputs"
     
-    if not pdf_files:
-        print("\nNo PDF files found in test_files/pdf/")
-        print("Please add a PDF file to test.")
-        return
-    
-    # Use the first PDF
-    pdf_path = pdf_files[0]
     print(f"\nProcessing: {pdf_path.name}")
     print(f"Full path: {pdf_path}")
-    
-    # Set output directory
-    output_dir = test_pdf_dir / f"{pdf_path.stem}_enhanced_outputs"
     
     print(f"\nOutput will be saved to: {output_dir}")
     print("\nStarting enhanced processing...")

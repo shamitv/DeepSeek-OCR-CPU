@@ -54,7 +54,11 @@ For advanced use cases requiring structured element extraction, individual eleme
 
 ```bash
 source .venv/bin/activate
+# Process first PDF in test_files/pdf/
 python pdf_demo_enhanced.py
+
+# Or process a specific PDF
+python pdf_demo_enhanced.py /path/to/document.pdf
 ```
 
 This enhanced processing extracts every document element (titles, paragraphs, images, tables, equations) as separate images with JSON metadata, and generates type-specific overlay visualizations.
