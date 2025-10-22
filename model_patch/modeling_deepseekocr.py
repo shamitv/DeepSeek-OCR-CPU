@@ -985,6 +985,9 @@ class DeepseekOCRForCausalLM(DeepseekV2ForCausalLM):
             # print(matches_ref)
             result = process_image_with_refs(image_draw, matches_ref, output_path)
 
+            # Save raw output with grounding references for enhanced extraction
+            with open(f'{output_path}/result_raw.txt', 'w', encoding='utf-8') as afile:
+                afile.write(outputs)
 
             for idx, a_match_image in enumerate(tqdm(matches_images, desc="image")):
                 outputs = outputs.replace(a_match_image, '![](images/' + str(idx) + '.jpg)\n')
