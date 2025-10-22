@@ -47,6 +47,8 @@ python pdf_demo.py
 
 The script creates an output folder named after the PDF stem (for example, `test_files/pdf/sample_outputs/`) and stores the extracted Markdown there while printing the results to the terminal.
 
+**See [PDF Demo Example](docs/PDF_DEMO_EXAMPLE.md)** for detailed output examples, including extracted figures, mathematical equations, and annotated page visualizations from a 16-page research paper.
+
 ## Running the PDF Utilities
 Two helper functions live in the `inference/` package for custom workflows:
 
