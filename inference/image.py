@@ -86,8 +86,14 @@ def process_image_enhanced(
     # Load the raw output with grounding references
     raw_output_path = output_dir_path / "result_raw.txt"
     if not raw_output_path.exists():
+        # List files in directory for debugging
+        import os
+        files = os.listdir(output_dir_path) if output_dir_path.exists() else []
         raise RuntimeError(
-            "Raw output file not found. Ensure the model is saving result_raw.txt"
+            f"Raw output file not found at: {raw_output_path}\n"
+            f"Output directory exists: {output_dir_path.exists()}\n"
+            f"Files in directory: {files}\n"
+            f"Ensure the model is saving result_raw.txt"
         )
     
     with open(raw_output_path, 'r', encoding='utf-8') as f:
