@@ -17,5 +17,6 @@ source "${VENV_DIR}/bin/activate"
 pip install --upgrade pip
 
 pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0+cpu torchvision==0.21.0+cpu
+pip install huggingface-hub
 
-echo "Virtual environment created at '${VENV_DIR}' and CPU packages installed."
+echo "Virtual environment created at '${VENV_DIR}' with CPU packages and huggingface-hub installed."
