@@ -3,9 +3,7 @@
 from pathlib import Path
 from typing import Optional
 
-from transformers import AutoModel, AutoTokenizer
-
-MODEL_ID = "deepseek-ai/DeepSeek-OCR"
+from .model_loader import load_model_and_tokenizer
 
 
 def process_pdf(pdf_path: str, output_dir: Optional[str] = None) -> str:
@@ -18,13 +16,7 @@ def process_pdf(pdf_path: str, output_dir: Optional[str] = None) -> str:
     if output_dir_path:
         output_dir_path.mkdir(parents=True, exist_ok=True)
 
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
-    model = AutoModel.from_pretrained(
-        MODEL_ID,
-        trust_remote_code=True,
-        use_safetensors=True,
-    )
-    model = model.eval().to("cpu")
+    tokenizer, model = load_model_and_tokenizer()
 
     prompt = "<image>\n<|grounding|>Convert the document to markdown. "
     result = model.infer_pdf(

@@ -500,9 +500,9 @@ class DeepseekOCRModel(DeepseekV2Model):
 
                 if images_in_this_batch:
                     images_in_this_batch = torch.cat(images_in_this_batch, dim=0)
-                    # exit()
-
-                    inputs_embeds[idx].masked_scatter_(images_seq_mask[idx].unsqueeze(-1).cuda(), images_in_this_batch)
+                    mask = images_seq_mask[idx].unsqueeze(-1).to(inputs_embeds.device)
+                    images_in_this_batch = images_in_this_batch.to(inputs_embeds.device)
+                    inputs_embeds[idx].masked_scatter_(mask, images_in_this_batch)
 
                 idx += 1
             
@@ -886,37 +886,40 @@ class DeepseekOCRForCausalLM(DeepseekV2ForCausalLM):
 
 
 
-        input_ids = torch.LongTensor(tokenized_str)
+        device = next(self.parameters()).device
+
+        input_ids = torch.LongTensor(tokenized_str).to(device)
 
 
-        
 
-        images_seq_mask = torch.tensor(images_seq_mask, dtype=torch.bool)
+        images_seq_mask = torch.tensor(images_seq_mask, dtype=torch.bool, device=device)
 
 
         if len(images_list) == 0:
-            images_ori = torch.zeros((1, 3, image_size, image_size))
-            images_spatial_crop = torch.zeros((1, 2), dtype=torch.long)
-            images_crop = torch.zeros((1, 3, base_size, base_size))
+            images_ori = torch.zeros((1, 3, image_size, image_size), dtype=torch.bfloat16, device=device)
+            images_spatial_crop = torch.zeros((1, 2), dtype=torch.long, device=device)
+            images_crop = torch.zeros((1, 3, base_size, base_size), dtype=torch.bfloat16, device=device)
 
         else:
-            images_ori = torch.stack(images_list, dim=0)
-            images_spatial_crop = torch.tensor(images_spatial_crop, dtype=torch.long)
+            images_ori = torch.stack(images_list, dim=0).to(device)
+            images_spatial_crop = torch.tensor(images_spatial_crop, dtype=torch.long, device=device)
             if images_crop_list:
-                images_crop = torch.stack(images_crop_list, dim=0)
+                images_crop = torch.stack(images_crop_list, dim=0).to(device)
             else:
-                images_crop = torch.zeros((1, 3, base_size, base_size))
+                images_crop = torch.zeros((1, 3, base_size, base_size), dtype=torch.bfloat16, device=device)
 
 
+
+        autocast_device = "cuda" if device.type == "cuda" else "cpu"
 
         if not eval_mode:
             streamer = NoEOSTextStreamer(tokenizer, skip_prompt=True, skip_special_tokens=False)
-            with torch.autocast("cuda", dtype=torch.bfloat16):
+            with torch.autocast(autocast_device, dtype=torch.bfloat16):
                 with torch.no_grad():
                     output_ids = self.generate(
-                        input_ids.unsqueeze(0).cuda(),
-                        images=[(images_crop.cuda(), images_ori.cuda())],
-                        images_seq_mask = images_seq_mask.unsqueeze(0).cuda(),
+                        input_ids.unsqueeze(0),
+                        images=[(images_crop, images_ori)],
+                        images_seq_mask = images_seq_mask.unsqueeze(0),
                         images_spatial_crop = images_spatial_crop,
                         # do_sample=False,
                         # num_beams = 1,
@@ -929,12 +932,12 @@ class DeepseekOCRForCausalLM(DeepseekV2ForCausalLM):
                         )
 
         else:
-            with torch.autocast("cuda", dtype=torch.bfloat16):
+            with torch.autocast(autocast_device, dtype=torch.bfloat16):
                 with torch.no_grad():
                     output_ids = self.generate(
-                        input_ids.unsqueeze(0).cuda(),
-                        images=[(images_crop.cuda(), images_ori.cuda())],
-                        images_seq_mask = images_seq_mask.unsqueeze(0).cuda(),
+                        input_ids.unsqueeze(0),
+                        images=[(images_crop, images_ori)],
+                        images_seq_mask = images_seq_mask.unsqueeze(0),
                         images_spatial_crop = images_spatial_crop,
                         # do_sample=False,
                         # num_beams = 1,
@@ -947,7 +950,7 @@ class DeepseekOCRForCausalLM(DeepseekV2ForCausalLM):
                 
 
         if '<image>' in conversation[0]['content'] and eval_mode:
-                outputs = tokenizer.decode(output_ids[0, input_ids.unsqueeze(0).cuda().shape[1]:])
+                outputs = tokenizer.decode(output_ids[0, input_ids.unsqueeze(0).shape[1]:])
                 stop_str = '<｜end▁of▁sentence｜>'
                 if outputs.endswith(stop_str):
                     outputs = outputs[:-len(stop_str)]
@@ -957,7 +960,7 @@ class DeepseekOCRForCausalLM(DeepseekV2ForCausalLM):
                 return outputs
         
         if '<image>' in conversation[0]['content'] and test_compress:
-            outputs = tokenizer.decode(output_ids[0, input_ids.unsqueeze(0).cuda().shape[1]:])
+            outputs = tokenizer.decode(output_ids[0, input_ids.unsqueeze(0).shape[1]:])
             pure_texts_outputs_token_length = len(text_encode(tokenizer, outputs, bos=False, eos=False))
             print('='*50)
             print('image size: ', (w, h))
@@ -968,7 +971,7 @@ class DeepseekOCRForCausalLM(DeepseekV2ForCausalLM):
 
 
         if '<image>' in conversation[0]['content'] and save_results:
-            outputs = tokenizer.decode(output_ids[0, input_ids.unsqueeze(0).cuda().shape[1]:])
+            outputs = tokenizer.decode(output_ids[0, input_ids.unsqueeze(0).shape[1]:])
             stop_str = '<｜end▁of▁sentence｜>'
 
             print('='*15 + 'save results:' + '='*15)
