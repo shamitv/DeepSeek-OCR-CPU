@@ -52,13 +52,20 @@ The script creates an output folder named after the PDF stem (for example, `test
 ## Enhanced Extraction (New!)
 For advanced use cases requiring structured element extraction, individual element images, and type-specific visualizations:
 
+**Example 1: Process first PDF in test_files/pdf/**
 ```bash
 source .venv/bin/activate
-# Process first PDF in test_files/pdf/
 python pdf_demo_enhanced.py
+```
 
-# Or process a specific PDF
-python pdf_demo_enhanced.py /path/to/document.pdf
+**Example 2: Process a specific PDF**
+```bash
+source .venv/bin/activate
+python pdf_demo_enhanced.py test_files/pdf/2510.17820v1.pdf
+# Or with absolute path
+python pdf_demo_enhanced.py /home/user/documents/research_paper.pdf
+# Or with relative path
+python pdf_demo_enhanced.py ~/Downloads/report.pdf
 ```
 
 This enhanced processing extracts every document element (titles, paragraphs, images, tables, equations) as separate images with JSON metadata, and generates type-specific overlay visualizations.
