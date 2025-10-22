@@ -1,0 +1,41 @@
+
+## 6 Core features and extensions of the standard model  
+
+
+The response function of Eqn 2 is essentially a multi- channel linear- nonlinear cascade model [32, 40, 41] (Fig 1D). The common visual stimulus \(S\) gets processed in parallel channels, each of which applies a linear spatio- temporal filter \(K\) . The output of each channel gets passed through a static nonlinear function \(N\) . The results get combined in a weighted sum to form the GC signal \(G\) . Optionally there is another nonlinearity that converts this signal into spikes.  
+
+
+This general framework is constrained in a number of ways that reflect important aspects of retinal processing. Here I discuss the main features of the "plain vanilla" model (Eqn 2), and how they can be enhanced for special purposes.  
+
+
+### 6.1 Translation-invariance  
+
+
+The kernels \(K_{i}\) and weighting functions \(w_{ji}\) are at the heart of the model, because they specify the projection from light stimuli to BCs and from BCs to GCs. In the standard model, these weights depend on the position of inputs and outputs only through the difference vector, \(\vec{x}^{\prime} - \vec{x}\) . As a result, the transformation from visual stimulus to spikes of a certain GC type follows the same rules at every point on the retina.  
+
+
+In reality, the retina is translation- invariant only to a first approximation. For example, in the primate retina, both the size and density of GC receptive fields vary substantially from the fovea to the periphery [42]. Similar systematic gradients in response properties of a given cell type also exist in other species [43- 45]. In practice, many functional experiments on retinal responses are performed over small regions of retina where the gradients don't come into play. In other cases, of course, one can expand on the standard model by adding some regional variation to the kernels.  
+
+
+### 6.2 Linear filters  
+
+
+The bipolar cell signal is commonly taken to be a linear function of the light stimulus, obtained by a simple convolution in space and time (Eqn 1). This may seem surprising, given the strong nonlinearities that are apparent in the photoreceptor response, in particular the huge modulation of receptor gain depending on recent light exposure. In practice, many experiments are conducted under conditions that drive those nonlinearities only weakly, for example by modulating the light intensity over a limited range. However, natural vision includes stimuli with high local intensity fluctuations. In modeling retinal function under those conditions, it may be useful to include a nonlinear gain control leading to the bipolar cell signal [46, 47].  
+
+
+### 6.3 Dynamics  
+
+
+In its simplest formulation above (Eqn 4), the standard model places all the dynamics into the response kernel of the bipolar cell. None of the other elements introduces a time- dependence. This simplification reflects the fact that the photoreceptor is by far the slowest neuron in the retina and sets the basic time scale for retinal signals. By comparison, neurons downstream of the bipolar cell are relatively fast.  
+
+
+For some purposes, however, it may be important to include additional dynamic components. For example, the input that the ganglion cell receives from ACs will be slightly delayed relative to the input from BCs, due to the additional synapse involved. As a result, this negative feed- forward loop can implement a high- pass filter that makes the ganglion cell exquisitely sensitive to change [48- 50]. Another important dynamic feature may be short- term depression at bipolar or amacrine cell synapses, which has been invoked for certain adaptation phenomena [51- 54].  
+
+
+### 6.4 Nonlinearity  
+
+
+The standard model locates all the nonlinearity in the synaptic transfer from bipolar (or amacrine) to ganglion cell (Eqn 4). Without that nonlinear transmission, the ganglion cell response becomes a simple linear function of the stimulus. All the pooling over bipolar cell of different types and locations just leads to a simple average of their response kernels. Not much visual computation can be accomplished this way, beyond some spatial or temporal filtering.  
+
+
+By contrast, a system of parallel pathways, each followed by a rectifying nonlinearity, has very rich computational power. In fact, such a model serves as a universal approximator: With the proper choice of kernel \(K\) in each pathway one can in principle compute any desired function of space and time [55, 56].

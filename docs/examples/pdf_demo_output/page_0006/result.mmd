@@ -1,0 +1,32 @@
+
+### 6.5 Point neurons  
+
+
+In the plain vanilla model, each of the interneurons (bipolar or amacrine cells) sums all its synaptic inputs and produces a single output signal, communicated through a nonlinear synapse. In other words the cells are treated as "point neurons", which greatly simplifies the mathematical treatment of the circuit.  
+
+
+However, there are known cases where different parts of the neuron carry different signals. For example the starburst amacrine cell - a central element in the circuit for direction- selectivity - seems to carry out different motion computations in each segment of its dendritic arbor [37, 57]. From a modeling perspective, one can assign each of these dendrites to be another LN subunit, converting bipolar cell inputs to GABA- ergic output onto the ganglion cell.  
+
+
+Another example occurs at the synaptic terminals of bipolar cells, which often receive inhibitory input from amacrine cells directly adjacent to the bipolar cell's synaptic release site. These local interactions do not spread to the other terminals, and thus each terminal may compute its own function of the visual stimulus [58, 59]. Again, for modeling purposes, one could treat each bipolar terminal as another LN subunit that combines input from bipolar and amacrine cell signals.  
+
+
+### 6.6 Spiking  
+
+
+As formulated above, neuronal responses are continuous functions of time. In fact, most neurons in the retina do not produce action potentials, except for the GCs themselves and some types of ACs<sup>5</sup>. For the GCs, one can interpret the continuous time series \(G(t)\) as an instantaneous firing rate, and compare it to the measured spike rate of a neuron, for example averaged over identical stimulus trials. Or one may interpret \(G(t)\) as a membrane current and feed it through a spike- generating model to predict a ganglion cell spike train [60, 61].  
+
+
+## 7 Why is the Standard Model a useful abstraction?  
+
+
+As hinted above, the Standard Model (Eqn 4) can be seen as one point along a continuum of models for retinal function: ranging from the simplest, in which each ganglion cell just reports the amount of light in a circular receptive field<sup>6</sup>, to a detailed compartmental model of membranes, receptors, channels, and vesicle release sites. Along that continuum, the Standard Model is a uniquely powerful abstraction of biological reality, because (1) it can explain a remarkable range of phenomena, compared to the limited complexity of its ingredients; (2) it is mathematically simple enough that one can reason about its behavior even without explicit calculation; and (3) theorems have been proven about the expressivity of this model that hint at an evolutionary theory for the structure of the retina [55, 56].  
+
+
+What does a retinal response model need to explain? Ideally, one would like to predict the spike train of a ganglion cell in response to any visual stimulus on the retina. Of course, the stimulus \(S(x,t)\) has infinite dimensionality, so one can only probe that space sparsely, and choices need to be made. Early on, those choices were motivated by technical feasibility and mathematical convenience (e.g. flashing spots, or traveling gratings). More recently there has been a turn towards stimuli that actually happen ecologically (natural images and movies, eye movements) [62- 65]. In the process, a host of interesting visual computations have been identified across the \(\sim 40\) ganglion cell types [42, 66]. Many of these aspects of retinal responses seemed puzzling at first, but eventually were seen to follow from the same standard model, if one merely adjusts the parameters [2, 67- 70]. A non- exhaustive list of these phenomena includes:  
+
+
+Center- surround antagonism: A generic feature of responses in many ganglion cell types is the antagonism between the center of the receptive field and the surround region. For example, an ON cell is excited by light falling on the center but suppressed by light on the surround, leading to the classic "mexican hat" sensitivity profile. In the standard model, the bipolar cell subunits already have an antagonistic surround, and further surround inhibition comes from amacrine cell subunits. The combination can account for any receptive field profile via the weighting functions \(w\) and \(u\) [28, 71].  
+
+
+Non- linear spatial summation: The proposal for a non- linear subunits model first emerged from a puzzling observation about GCs in the cat. So- called X- cells act as though they linearly sum the light in the receptive field, but Y- cells don't. They fire every time one redistributes the light within the receptive field, even while leaving the total unchanged [30, 31, 72, 73]. In the standard model, this can be explained by making the bipolar cell output functions ( \(N\) in Eqn 2) more linear (X- type) or more rectifying (Y- type). In the Y- cell, any change in light pattern excites some subunits but inhibits others. Owing to the output rectification, only the excitation gets passed on to the ganglion cell and produces a burst of spikes. The nonlinear subunits in the model have since been identified as bipolar cells [38, 39].
