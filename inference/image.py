@@ -9,8 +9,10 @@ from .model_loader import load_model_and_tokenizer
 def process_image(image_path: str, output_dir: Optional[str] = None) -> str:
     """Run OCR on a single image using the DeepSeek model on CPU."""
     image_path = str(Path(image_path).expanduser().resolve())
+    output_dir_path: Optional[Path] = None
     if output_dir is not None:
-        output_dir = str(Path(output_dir).expanduser().resolve())
+        output_dir_path = Path(output_dir).expanduser().resolve()
+        output_dir = str(output_dir_path)
 
     tokenizer, model = load_model_and_tokenizer()
 
@@ -26,4 +28,12 @@ def process_image(image_path: str, output_dir: Optional[str] = None) -> str:
         save_results=bool(output_dir),
         test_compress=True,
     )
+    if result is None and output_dir_path:
+        result_file = output_dir_path / "result.mmd"
+        if result_file.is_file():
+            result = result_file.read_text(encoding="utf-8")
+
+    if result is None:
+        raise RuntimeError("Model inference did not return any output.")
+
     return result

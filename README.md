@@ -37,6 +37,16 @@ python image_demo.py
 
 The demo writes outputs (Markdown text plus any referenced images) into `test_files/images/outputs/` and prints the extracted content to the terminal.
 
+## Running the PDF Demo
+Activate the virtual environment and run the demo script to OCR the first PDF found in `test_files/pdf/`:
+
+```bash
+source .venv/bin/activate
+python pdf_demo.py
+```
+
+The script creates an output folder named after the PDF stem (for example, `test_files/pdf/sample_outputs/`) and stores the extracted Markdown there while printing the results to the terminal.
+
 ## Running the PDF Utilities
 Two helper functions live in the `inference/` package for custom workflows:
 
