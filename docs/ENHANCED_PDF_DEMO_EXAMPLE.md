@@ -2,6 +2,28 @@
 
 This document demonstrates the **advanced element-level extraction capabilities** of the DeepSeek OCR CPU toolkit, showcasing how the enhanced processing pipeline identifies, extracts, and stores every component of a document with comprehensive metadata.
 
+## Table of Contents
+
+- [Source Document](#source-document)
+- [Processing Method](#processing-method)
+- [Complete Output Structure](#complete-output-structure)
+- [Document Statistics](#document-statistics)
+- [Key Feature 1: Complete Element Identification and Storage](#key-feature-1-complete-element-identification-and-storage)
+- [Feature 2: Page 6 - Diagram with Caption Extraction](#feature-2-page-6---diagram-with-caption-extraction)
+- [Feature 3: Pages 13-16 - Charts and Complex Data](#feature-3-pages-13-16---charts-and-complex-data)
+- [Feature 4: Front Page Analysis](#feature-4-front-page-analysis)
+- [Feature 5: Caption-Image Association](#feature-5-caption-image-association)
+- [Type-Specific Visualizations](#type-specific-visualizations)
+- [Use Cases Enabled](#use-cases-enabled)
+- [Performance Metrics](#performance-metrics)
+- [Comparison: Standard vs Enhanced Processing](#comparison-standard-vs-enhanced-processing)
+- [Key Capabilities Demonstrated](#key-capabilities-demonstrated)
+- [Accessing Full Results](#accessing-full-results)
+- [Notes on Quality](#notes-on-quality)
+- [API Usage](#api-usage)
+
+---
+
 ## Source Document
 
 **Paper:** "CoSense-LLM: Semantics-at-the-Edge with Cost- and Uncertainty-Aware Cloud-Edge Cooperation"  
@@ -217,39 +239,7 @@ converts continuous multimodal sensor streams...
 
 ---
 
-## Feature 2: Front Page Analysis
-
-**Source Page 1:**
-![Page 1](examples/2510.19670v1_enhanced_outputs/pages/page_0001.png)
-
-### Extracted Title Element
-
-![Title](examples/2510.19670v1_enhanced_outputs/page_0001/elements/page_0001_elem_0000_title.jpg)
-
-**Element Metadata:**
-- **Type:** title
-- **Dimensions:** 1251 × 66 pixels
-- **Aspect Ratio:** 18.95 (wide banner)
-- **Position:** Top of page (normalized y: 0.09 - 0.12)
-
-### Text Blocks Extracted
-
-Page 1 contains **8 discrete elements**:
-- 1 title
-- 1 subtitle (author information)
-- 6 text blocks (abstract and introduction)
-
-**All Types Overlay (Page 1):**
-![Page 1 All Types](examples/2510.19670v1_enhanced_outputs/page_0001/overlays/all_types_colored.jpg)
-
-Color coding:
-- **Red**: Title
-- **Purple**: Subtitle
-- **Green**: Text blocks
-
----
-
-## Feature 3: Page 6 - Diagram with Caption Extraction
+## Feature 2: Page 6 - Diagram with Caption Extraction
 
 Page 6 demonstrates **automatic diagram detection and caption association**.
 
@@ -313,7 +303,7 @@ Fig. 1: Overall architecture of CoSense-LLM
 
 ---
 
-## Feature 4: Pages 13-16 - Charts and Complex Data
+## Feature 3: Pages 13-16 - Charts and Complex Data
 
 ### Page 13: Chart with Caption
 
@@ -433,6 +423,38 @@ Page 14 showcases the system's ability to handle **complex mixed content** with 
 - Image 1: Performance visualization
 - Image 2: System architecture diagram
 - Table: Comparative results
+
+---
+
+## Feature 4: Front Page Analysis
+
+**Source Page 1:**
+![Page 1](examples/2510.19670v1_enhanced_outputs/pages/page_0001.png)
+
+### Extracted Title Element
+
+![Title](examples/2510.19670v1_enhanced_outputs/page_0001/elements/page_0001_elem_0000_title.jpg)
+
+**Element Metadata:**
+- **Type:** title
+- **Dimensions:** 1251 × 66 pixels
+- **Aspect Ratio:** 18.95 (wide banner)
+- **Position:** Top of page (normalized y: 0.09 - 0.12)
+
+### Text Blocks Extracted
+
+Page 1 contains **8 discrete elements**:
+- 1 title
+- 1 subtitle (author information)
+- 6 text blocks (abstract and introduction)
+
+**All Types Overlay (Page 1):**
+![Page 1 All Types](examples/2510.19670v1_enhanced_outputs/page_0001/overlays/all_types_colored.jpg)
+
+Color coding:
+- **Red**: Title
+- **Purple**: Subtitle
+- **Green**: Text blocks
 
 ---
 

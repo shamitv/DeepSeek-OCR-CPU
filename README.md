@@ -76,7 +76,7 @@ This enhanced processing extracts every document element (titles, paragraphs, im
 - Structured JSON output with element metadata
 - Fully backward compatible with existing code
 
-**See [Enhanced Extraction Quick Start](docs/ENHANCED_EXTRACTION_QUICKSTART.md)** for usage examples and [Implementation Summary](docs/reference/IMPLEMENTATION_SUMMARY.md) for technical details.
+**See [Enhanced Extraction Quick Start](docs/ENHANCED_EXTRACTION_QUICKSTART.md)** for usage examples, **[Enhanced PDF Demo Example](docs/ENHANCED_PDF_DEMO_EXAMPLE.md)** for a comprehensive real-world demonstration with charts and tables, and [Implementation Summary](docs/reference/IMPLEMENTATION_SUMMARY.md) for technical details.
 
 ## Using the API
 Several helper functions live in the `inference/` package for custom workflows:
