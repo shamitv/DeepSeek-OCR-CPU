@@ -1,0 +1,49 @@
+![](images/0.jpg)
+
+
+<center>Fig. 2: Task performance (macro-F1) across datasets (HL/LO/HM) and methods. </center>  
+
+
+for the router; we explicitly include them in the multi- objective form of Eq. (5) to constrain behavior. Finally, cache metrics illuminate secondary effects: a higher KV hit ratio may reduce TTCR but at the cost of memory; streaming KV can trim prefill time on long prompts, aligning with results in [12].  
+
+
+### M. Summary  
+
+
+This setup pairs realistic, interference- prone sensor streams with rigorous, stream- aware measurement of accuracy, grounding, latency, energy, and privacy proxies. By anchoring against baselines that reflect current practice in both sensing (edge classifier+ templates) and serving (cloud- only, partitioned, serverless), and by reporting caching and uncertainty diagnostics, we aim to make the evaluation informative for both system builders and application practitioners. The next section presents results under the CS, CE, and TS protocols, followed by ablations that isolate the impact of Edge- RAG, uncertainty- aware routing, and KV/decoding accelerators.  
+
+
+## V. RESULTS AND DISCUSSION  
+
+
+We report results across Home- Living (HL), Lab- Office (LO), and Health- Mobility (HM) settings under the three protocols defined in Section 3Experimental Setup: Cross- Subject (CS), Cross- Environment (CE), and Temporal Shift (TS). Unless otherwise noted, the full pipeline in Fig. 1 is enabled, with SenseFusion producing discrete codes \(Z\) , Edge- RAG grounding explanations, PromptRouter selecting among EDGE- ONLY, EDGE+RAG, and ESCALATE, and on- edge serving configured with paged KV, FlashAttention- 2- style kernels, and 4/8- bit weights [11], [47]. We first summarize headline quantitative outcomes, then analyze latency/throughput and energy, followed by ablations, visualization- based insights, robustness and privacy, sensitivity, and broader implications. Throughout, we situate findings in the context of related systems and sensing literature [12], [22], [33], [43], [70].  
+
+
+### A. Headline Outcomes  
+
+
+a) Task accuracy and explanations.: Table I aggregates macro-F1 for event recognition, open-set AUROC, factual consistency of explanations, and readability. Across HL and LO in CS, CoSense-LLM improves macro-F1 over the strongest  
+
+
+
+TABLE I: Headline results across HL/LO/HM under the CS protocol (higher is better unless noted). Macro-F1 is perdataset. AUROC is for unknown detection under TS. Factual consistency and readability are judged on a \(10\%\) sampled set.   
+
+<table><tr><td>Method</td><td>HL F1</td><td>LO F1</td><td>HM F1</td><td>AUROC (TS)</td></tr><tr><td>Classifier+ Templates</td><td>0.71</td><td>0.66</td><td>0.68</td><td>0.78</td></tr><tr><td>Cloud-only LLM</td><td>0.75</td><td>0.71</td><td>0.75</td><td>0.83</td></tr><tr><td>Partitioned (Split)</td><td>0.76</td><td>0.72</td><td>0.76</td><td>0.84</td></tr><tr><td>Edge-Only LLM</td><td>0.77</td><td>0.73</td><td>0.77</td><td>0.85</td></tr><tr><td>Edge+RAG (ours, ablated)</td><td>0.80</td><td>0.77</td><td>0.80</td><td>0.88</td></tr><tr><td>CoSense-LLM (full)</td><td>0.83</td><td>0.80</td><td>0.84</td><td>0.90</td></tr></table>
+
+
+Readability (Likert 1-5): Classifier 3.1, Cloud 3.6, Split 3.7, Edge 3.7, Edge+R  
+
+
+edge classifier+ templates baseline by a consistent margin and reduces contradiction rate by grounding on Edge- RAG (cf. Table III). Gains persist under CE, where the environment and multipath differ, though absolute numbers drop as expected. On HM, the qualitative benefit is especially clear: explanations that cite retrieved clinical snippets (respiratory ranges and fall- response SOPs) are judged more helpful by annotators than template text. These improvements align with the premise that hybrid retrieval at the edge mitigates the hallucination risk seen in LLM- only stacks and stabilizes outputs under drift [18], [33].  
+
+
+b) Latency, throughput, and energy.: Under the Moderate link profile, CoSense-LLM achieves p95 end-to-end latency well within the 750ms SLO across HL and LO, with the router choosing EDGE-ONLY or EDGE+RAG for most routine events. The ESCALATE path remains rare in steady state but becomes more frequent during open-set bursts or policy-sensitive queries (e.g., suspected fall-like patterns). Compared to a partitioned baseline (split prefill/decoding) inspired by [22], [70], our pipeline saves token traffic and avoids WAN exposure on routine decisions. Energy per decision decreases when local generation dominates, particularly when KV is quantized and decoding kernels are optimized [11], [15]. In the Poor profile, p95 latency remains bounded because the router degrades to EDGE+RAG summaries rather than risking long WAN waits; this behavior mirrors the throughput-latency tradeoff principles in disaggregated serving [16], [23].  
+
+
+c) Open-set behavior.: Across LO and TS, OSCR curves show better selective risk: at \(80\%\) coverage, selective accuracy is consistently higher for CoSense-LLM than for the edge classifier+ templates baseline, indicating that the uncertainty proxy \(u\) (Eq. (4)) is well-calibrated to abstain or escalate on unfamiliar patterns. This complements open-set Wi-Fi results where uncertainty and robust features are critical to avoid overconfident errors [13], [45].  
+
+
+### B. Latency Dissection and Throughput  
+
+
+a) Per-stage decomposition.: Figure 1 guides our decomposition: (i) SenseFusion encode+VQ, (ii) retrieval, (iii) routing, (iv) LLM prefill, (v) decode, (vi) post-processing. Table II lists median and p95 breakdowns. Encode+VQ remains \(< 60\) ms in the median on the embedded SoC thanks to
