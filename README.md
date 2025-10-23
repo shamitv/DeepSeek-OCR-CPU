@@ -49,22 +49,64 @@ The script creates an output folder named after the PDF stem (for example, `test
 
 **See [PDF Demo Example](docs/PDF_DEMO_EXAMPLE.md)** for detailed output examples, including extracted figures, mathematical equations, and annotated page visualizations from a 16-page research paper.
 
-## Running the PDF Utilities
-Two helper functions live in the `inference/` package for custom workflows:
+## Enhanced Extraction (New!)
+For advanced use cases requiring structured element extraction, individual element images, and type-specific visualizations:
 
-- `inference.pdf_to_images.pdf_to_images(...)`: converts a PDF into page images using PyMuPDF (configurable DPI and format).
-- `inference.pdf.process_pdf(...)`: runs OCR over a PDF, leveraging the same CPU-only model pipeline as the image demo.
+**Example 1: Process first PDF in test_files/pdf/**
+```bash
+source .venv/bin/activate
+python pdf_demo_enhanced.py
+```
+
+**Example 2: Process a specific PDF**
+```bash
+source .venv/bin/activate
+python pdf_demo_enhanced.py test_files/pdf/2510.17820v1.pdf
+# Or with absolute path
+python pdf_demo_enhanced.py /home/user/documents/research_paper.pdf
+# Or with relative path
+python pdf_demo_enhanced.py ~/Downloads/report.pdf
+```
+
+This enhanced processing extracts every document element (titles, paragraphs, images, tables, equations) as separate images with JSON metadata, and generates type-specific overlay visualizations.
+
+**Features:**
+- Individual element extraction (each title, paragraph, image, table saved separately)
+- Type-specific bounding box overlays (visualize each element type)
+- Structured JSON output with element metadata
+- Fully backward compatible with existing code
+
+**See [Enhanced Extraction Quick Start](docs/ENHANCED_EXTRACTION_QUICKSTART.md)** for usage examples and [Implementation Summary](docs/reference/IMPLEMENTATION_SUMMARY.md) for technical details.
+
+## Using the API
+Several helper functions live in the `inference/` package for custom workflows:
+
+**Basic Processing:**
+- `inference.process_image(...)`: OCR a single image
+- `inference.process_pdf(...)`: OCR an entire PDF
+- `inference.pdf_to_images(...)`: Convert PDF to images using PyMuPDF
+
+**Enhanced Processing (with element extraction):**
+- `inference.process_image_enhanced(...)`: OCR with individual element extraction
+- `inference.process_pdf_enhanced(...)`: PDF processing with structured output
 
 Import the functions after activating the virtual environment:
 
 ```python
 from inference import process_image, process_pdf, pdf_to_images
+from inference import process_image_enhanced, process_pdf_enhanced
 
-# Single image
+# Basic: Single image
 markdown_text = process_image("/path/to/image.png", output_dir="/tmp/results")
 
-# Entire PDF (returns markdown per page)
-markdown_pages = process_pdf("/path/to/document.pdf", output_dir="/tmp/pdf_results")
+# Basic: Entire PDF (returns markdown)
+markdown_text = process_pdf("/path/to/document.pdf", output_dir="/tmp/pdf_results")
+
+# Enhanced: Extract individual elements
+result = process_pdf_enhanced("/path/to/document.pdf", output_dir="/tmp/enhanced")
+print(f"Found {len(result['pages'])} pages")
+for page in result['pages']:
+    print(f"Page {page['page_number']}: {len(page['elements'])} elements")
 
 # Convert a PDF to images first
 images = pdf_to_images("/path/to/document.pdf", "/tmp/pdf_images", dpi=200)
