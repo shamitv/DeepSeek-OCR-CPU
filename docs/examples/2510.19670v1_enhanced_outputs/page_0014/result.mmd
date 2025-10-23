@@ -1,0 +1,54 @@
+![](images/0.jpg)
+
+
+<center>Fig. 3: CDF of end-to-end latency under the Moderate link for EDGE-ONLY, EDGE+RAG, and ESCALATE. </center>  
+
+![](images/1.jpg)
+
+
+<center>Fig. 4: Energy per decision across datasets and methods. Lower is better. </center>  
+
+
+fused LN+GEMM and modest \(K (\leq 16)\) . Retrieval is typically \(< 25\) ms (dense+BM25) on NVMe- backed indices, consistent with small HNSW of parameters. Prefill and decode dominate whenever the local LLM is used; with FlashAttention- 2- style kernels and short outputs (cap 200 tokens), p95 decode stays \(< 250\) ms. WAN prefill/decoding appears only in ESCALATE, and its tail grows in the Poor profile; the router dampens impact by reducing escalation rate and output length. This pattern echoes the benefits of disaggregating prefill/decoding pools [16] and tuning the throughput- latency frontier [23].  
+
+
+b) First token time (FTT) and decode cadence.: In HL, FTT for EDGE-ONLY averages \(\approx 150\) ms and \(95 < 300\) ms; with Medusa-style multi-head drafting and lookahead enabled, FTT improves further, aligning with [40], [53]. We also observe smoother token cadence due to paged KV [47] and context streaming on longer prompts [12]. Decode spikes correlate with temperature-induced downclocking; the runtime downshifts quantization to sustain cadence, a behavior reminiscent of server throughput controllers [54].  
+
+
+c) Throughput under concurrency.: We scale concurrent sessions to stress the edge. Because the router avoids escalations during bursts, throughput remains near linear up to a device-specific limit, beyond which the EDF scheduler drops small batches in favor of lower-variance latency. Compared to split inference, local-only answers prevent WAN congestion  
+
+
+
+TABLE II: Per-stage latency (ms) under the Moderate link profile on HL (continuous stream). Median \(p95\) for the three router actions. Totals may slightly differ from sum due to asynchronous overlap.   
+
+<table><tr><td>Stage</td><td>Edge-Only</td><td>Edge+RAG</td><td>Escalate</td></tr><tr><td>Encode + VQ</td><td>48 / 60</td><td>49 / 62</td><td>49 / 62</td></tr><tr><td>Retrieval (dense+BM25)</td><td>—</td><td>18 / 32</td><td>21 / 36</td></tr><tr><td>Routing (policy eval.)</td><td>5 / 9</td><td>6 / 10</td><td>7 / 12</td></tr><tr><td>LLM Prefill (local/cloud)</td><td>80 / 140</td><td>84 / 150</td><td>210 / 380</td></tr><tr><td>LLM Decode (local/cloud)</td><td>160 / 240</td><td>175 / 250</td><td>420 / 690</td></tr><tr><td>Post-processing</td><td>12 / 20</td><td>14 / 22</td><td>18 / 28</td></tr><tr><td>End-to-end</td><td>310 / 495</td><td>355 / 540</td><td>745 / 1,220</td></tr></table>  
+
+
+
+TABLE III: Ablation on Edge-RAG (LO, TS protocol): retrieval type and depth \(k\) vs. factual consistency, contradiction rate, and time-to-complete response (TTCR). Hybrid scoring uses Eq. (3) with \(\lambda = 0.6\) , \(\kappa = 0.2\)   
+
+<table><tr><td>Variant</td><td>Consistency (%)</td><td>Contradiction (%)</td><td>TTCR (ms)</td></tr><tr><td>No-RAG (k=0)</td><td>74.2</td><td>7.8</td><td>520</td></tr><tr><td>Dense-only (k=1)</td><td>79.8</td><td>6.1</td><td>560</td></tr><tr><td>Dense-only (k=3)</td><td>84.5</td><td>5.0</td><td>605</td></tr><tr><td>Dense-only (k=5)</td><td>85.1</td><td>5.0</td><td>660</td></tr><tr><td>Sparse-only (k=1)</td><td>78.6</td><td>6.7</td><td>555</td></tr><tr><td>Sparse-only (k=3)</td><td>82.3</td><td>5.6</td><td>600</td></tr><tr><td>Sparse-only (k=5)</td><td>83.0</td><td>5.6</td><td>658</td></tr><tr><td>Hybrid (k=1)</td><td>82.7</td><td>5.4</td><td>565</td></tr><tr><td>Hybrid (k=3)</td><td>87.6</td><td>4.1</td><td>612</td></tr><tr><td>Hybrid (k=5)</td><td>87.4</td><td>4.2</td><td>668</td></tr></table>  
+
+
+and exhibit fewer head- of- line effects, qualitatively matching the intuition of prefill- decode pool separation [16].  
+
+
+### C. Ablations  
+
+
+We ablate components to isolate their contributions; numerical summaries are referenced via tables for compactness.  
+
+
+1) Edge-RAG and Groundedness:  
+
+
+a) Removing retrieval.: Without retrieval, explanation factual consistency drops and contradiction rate rises on LO (Table III). Gains from retrieval are largest in CE/TS where local notes capture environment-specific constraints and historical incidents; this mirrors the premise that nearby knowledge reduces hallucination [33]. Dense-only and sparsely retrieval underperform the hybrid scorer (Eq. (3)), reflecting complementary strengths; a small consistency prior \(\Gamma (\cdot)\) suppresses contradictory snippet sets and reduces downstream contradictions.  
+
+
+b) Retrieval depth.: Increasing \(k\) from 1 to 3 yields clear consistency gains; \(k = 5\) saturates or mildly harms latency. We find \(k = 3\) is a sweet spot under memory constraints. Caching retrieved IDs across adjacent windows reduces query cost, analogous to knowledge caching [18]. Hardware-aware RAG proposals (e.g., edge CiM) suggest further efficiency if co-processors are available [78].  
+
+
+2) Uncertainty and Router Thresholds:  
+
+
+a) Mixing weight \(\eta\) : Sweeping \(\eta\) in Eq. (4) reveals that combining sensory and language-side uncertainties outperforms either alone. Too much weight on the sensory classifier

@@ -1,0 +1,47 @@
+
+attention, fused LN+GEMM) and KV compression (2- 4 bit) are optional but recommended to meet tight budgets.  
+
+
+### O. Limitations and Extensions  
+
+
+Our discrete interface compresses information and may over- abstain under rare events; a back- off path can temporarily lift \(K\) or attach a low- rate raw feature sketch. The uncertainty proxy aggregates simple entropies; richer Bayesian marginals may further reduce escalations. Finally, our current NLI head for \(\Gamma\) assumes short snippets; a lightweight graph consistency model could scale consistency to longer documents without quadratic checks.  
+
+
+Equations recap: We provided six numbered equations: alignment (Eq. 1), VQ loss (Eq. 2), hybrid retrieval score (Eq. 3), uncertainty (Eq. 4), cost (Eq. 5), and routing objective (Eq. ??). Each equation is annotated inline with symbol definitions to aid implementation.  
+
+
+## IV. EXPERIMENTAL SETUP  
+
+
+We designed the experimental protocol to stress the core desiderata of CoSense- LLM- low latency, privacy- aware operation, and robust semantics- under realistic edge conditions. Unless otherwise stated, the full pipeline in Fig. 1 is enabled: SenseFusion encoders produce discrete semantic tokens \(Z\) , Edge- RAG grounds language output locally, and PromptRouter chooses between on- edge generation and a compact, redacted escalation. This section details the datasets, hardware and deployment environments, and evaluation methodology including metrics, measurement practice, and statistical testing. We report configuration choices with sufficient granularity to enable reproduction on commodity edge systems and to facilitate fair comparison with prior work on LLM serving and edge AI [11], [12], [16], [23], [33], [47].  
+
+
+### A. Datasets  
+
+
+Our study uses three in- house, multi- day collections that emulate common edge deployments, augmented with two public surrogates for cross- validation of generalization at scale. The in- house sets were captured under IRB- like data minimization protocols: raw waveforms never leave the capture node, and all annotations are de- identified before analysis. Across all sets, the sliding- window length is \(T = 4\mathrm{s}\) with a \(1\mathrm{s}\) hop (25% overlap) unless noted, matching the latency envelope of interactive edge applications and aligning with prior Wi- Fi sensing configurations in the literature.  
+
+
+a) Home-Living (HL).: HL records daily routines in two apartments \((45\mathrm{m}^2\) and \(62\mathrm{m}^2\) over 14 and 11 days respectively. Sensors include: (i) commodity Wi-Fi NICs capturing CSI at \(\sim 500\mathrm{Hz}\) per selected subcarrier using off-the-shelf access points; (ii) a wrist IMU on the primary resident during waking hours; (iii) a far-field microphone; and (iv) an optional RFID reader deployed near the entryway. Activities are unscripted with episodic labels for events: cooking, sitting, walking, door entry/exit, fall-like transient (rare), and abnormal dwelling. Ground truth stems from a combination of diary entries, button taps on a handheld device, and sparse  
+
+
+video snippets reviewed by two annotators. Inter- annotator agreement \((\kappa)\) is 0.81 on episode boundaries and 0.86 on event types. The microphone stream is used only for coarse acoustic energy patterns; no speech content is retained.  
+
+
+b) Lab-Office (LO).: LO spans two open-plan rooms and a corridor, captured over 10 business days with up to eight concurrent participants. The aim is to stress interference and multi-agent overlap. CSI and IMU are the primary modalities; RFID tags are attached to asset carts. We annotate episodic events for object pickup/return, cart motion, group gathering, and transit between areas. To probe open-set behavior, 18% of windows in the last three days contain patterns not seen earlier (e.g., furniture relocation, temporary partition walls). These are labeled unknown and used to evaluate abstention.  
+
+
+c) Health-Mobility (HM).: HM targets respiratory and posture monitoring in a small clinic space with two beds and a waiting area. CSI antennas are placed to minimize line-of-sight privacy concerns. We annotate supine, sitting, standing, ambulation, cough/bout clusters, and coarse respiratory phases derived from a chest strap reference. For a subset of sessions \((n = 10)\) , a spirometry device provides continuous reference for forced exhalations; we use these to test whether semantic tokens preserve sufficient physiological granularity for downstream advising.  
+
+
+d) Public surrogates.: To probe scale and content drift without sharing any private data, we employ two public surrogates: an IMU activity dataset with daily living motions and a small-scale audio events corpus with environmental sounds (e.g., clattering, door slam, cough). We do not use their raw labels as-is; instead we re-map them to the semantic vocabulary of our instruction-tuning prompts so that retrieval and explanation structures carry over. The purpose is to test whether the learned codebook and fusion layers generalize across hardware and background noise.  
+
+
+e) Preprocessing and synchronization.: All sensor clocks are NTP-synchronized at boot and periodically re-aligned with a local beacon. CSI frames undergo: packet de-duplication, amplitude-phase sanitization, and subcarrier selection. We convert to time-frequency matrices via a 64 ms Hann window with 50% overlap, standardize per-session, and apply a \(3\times\) temporal median filter to reduce bursty interference [13]. IMU is low-pass filtered at 25 Hz and standardized per-user. Audio is immediately converted to 64-bin mel-spectrograms and then reduced to frame-level energy features; raw waveforms are discarded. RFID reads are time-bucketed at 50 ms into per-tag presence; the tag IDs are salted hashes. Each modality yields a sequence aligned to the 4 s window; missing data (e.g., the resident not wearing IMU) is indicated via a binary mask so SenseFusion can down-weight absent streams.  
+
+
+f) Splits and protocols.: We use three evaluation protocols to expose different generalization axes:  
+
+
+Cross- Subject (CS): train on a subset of residents/workers, test on held- out individuals recorded in the same spaces. Cross- Environment (CE): train on one apartment and one lab room, test on the other apartment and the corridor.

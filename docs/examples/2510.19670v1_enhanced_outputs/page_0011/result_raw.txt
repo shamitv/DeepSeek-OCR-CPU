@@ -1,0 +1,55 @@
+<|ref|>text<|/ref|><|det|>[[79, 63, 489, 212]]<|/det|>
+b) Instruction tuning.: The on-edge LLM is tuned on \((Z,\mathcal{D})\rightarrow E\) pairs comprising: (i) mined cases from day 1-2 of each site; (ii) synthetic paraphrases of site policies; and (iii) augmented out-of-order snippets to immunize against retrieval noise. We apply LoRA (rank 8-16) on attention \(\mathrm{q / k / v}\) and MLP up projections with nf4 4-bit weights and 8-bit activations. The maximum input is 768 tokens; outputs are capped at 200 tokens on edge and 350 on cloud. The draft head used for uncertainty is trained on short rationales (1-3 sentences) with a 0.5 dropout.  
+
+<|ref|>text<|/ref|><|det|>[[79, 215, 489, 320]]<|/det|>
+c) Router calibration.: We collect tuples \((u,\mathrm{lat},\mathrm{energy},\mathrm{tokens},a,\mathrm{outcome})\) from warm-up days to fit latency and energy predictors (ridge regression with features: \(K\) , \(k\) , quantization, concurrent sessions, KV mode, link profile). We grid-search \(\theta_{a}\) on a held-out validation stream to minimize expected regret under a mixed objective (F1, explanation quality, and SLA hit rate).  
+
+<|ref|>text<|/ref|><|det|>[[78, 322, 488, 397]]<|/det|>
+d) Retrieval indices.: Dense embeddings are 384-dim (MiniLM-scale) to keep the edge footprint small; the HNSW index uses \(M = 32\) , \(ef\_ construction = 200\) , query \(ef = 64\) . BM25 indices are pruned to remove stopwords and numerically tokens; all doc snippets are under 512 characters.  
+
+<|ref|>sub_title<|/ref|><|det|>[[78, 416, 228, 430]]<|/det|>
+### E. Evaluation Metrics  
+
+<|ref|>text<|/ref|><|det|>[[78, 440, 488, 500]]<|/det|>
+We cover four axes: task accuracy, explanation quality, efficiency, and privacy/stability. Metrics are computed as continuous streams, not as isolated windows, to respect temporal dependencies among caching, routing, and retrieval.  
+
+<|ref|>text<|/ref|><|det|>[[78, 503, 488, 638]]<|/det|>
+a) Task recognition and open-set behavior.: For event detection, we report per-class precision, recall, and macro-F1 under strict and tolerant \((\pm 1\mathrm{s})\) boundary matching. For open-set episodes, we compute the OSCR curve (Open-Set Classification Rate): varying an abstention threshold on \(u\) and plotting correct-known rate vs. false-accept rate. We also report AUROC for unknown-vs-known from the uncertainty score \(u\) . Because activity distributions are skewed, we include Matthews correlation coefficient (MCC) as a robust scalar.  
+
+<|ref|>text<|/ref|><|det|>[[77, 641, 488, 670]]<|/det|>
+b) Explanation quality.: We evaluate textual outputs along three axes:  
+
+<|ref|>text<|/ref|><|det|>[[92, 675, 488, 825]]<|/det|>
+1) Factual consistency: binary judgments by annotators on whether the explanation is supported by \((Z,\mathcal{D})\) . We report proportion consistent with \(95\%\) CIs from bootstrap. 
+2) Readability/helpfulness: Likert 1-5 averaged across annotators with Krippendorff's \(\alpha\) . 
+3) Semantic similarity: BERTScore-F1 against a reference set of short gold rationales written for \(10\%\) of episodes, acknowledging that this proxy does not replace human judgment.  
+
+<|ref|>text<|/ref|><|det|>[[77, 831, 488, 905]]<|/det|>
+For groundedness, we compute a citation rate: fraction of sentences that attribute a claim to retrieved snippets by ID, and a contradiction rate: proportion of outputs that contradict highscoring snippets per a tiny on-edge NLI head. These mirror RAG diagnostics [33].  
+
+<|ref|>text<|/ref|><|det|>[[508, 63, 919, 272]]<|/det|>
+c) Efficiency and service quality.: We measure end-to-end latency from window close \((t\_ T)\) to the first token time (FTT) and to the completed response (TTCR). We report p50/p90/p95 and the tail slope. Latency is decomposed into: encoding, retrieval, routing, prefill, decode, and postprocessing, consistent with disaggregation [16]. Throughput is the number of completed decisions per minute under a Poisson arrival (mean \(0.6\mathrm{Hz}\) ), and SLA hit rate is the fraction of outputs under the \(750\mathrm{ms}\) budget. Energy per decision (J) is computed by integrating power over the decision interval minus the idle baseline. Bandwidth consumption (KB) includes all inter-tier bytes (payloads + headers). We also report token cost: prompt+generation tokens and the percentage saved by local generation.  
+
+<|ref|>text<|/ref|><|det|>[[508, 273, 919, 348]]<|/det|>
+d) Caching and memory behavior.: We log KV cache hit ratio, average resident KV size, streaming stalls, and context reconstruction time. For retrieval, we report hit@k, MRR, and index query latency. These reveal interplay between paged/streaming KV [12], [47] and hybrid retrieval.  
+
+<|ref|>text<|/ref|><|det|>[[508, 349, 919, 470]]<|/det|>
+e) Uncertainty, calibration, and selective risk.: We estimate Expected Calibration Error (ECE) for both the event classifier and the draft head. We plot risk-coverage curves: as the router abstains more (lower coverage), what is the residual error on accepted cases? We summarize with AURC (area under risk-coverage). We also compute selective accuracy at fixed coverage levels to test whether \(u\) is well-ordered. These connect directly to routing quality because \(u\) gates escalation.  
+
+<|ref|>text<|/ref|><|det|>[[508, 471, 919, 620]]<|/det|>
+f) Privacy and safety proxies.: Since raw waveforms are retained locally, we report two proxies: (i) raw data leakage rate: fraction of escalations that would have requested raw features if allowed (we keep this at 0 by design); and (ii) PII leakage risk: fraction of escalations containing strings that match a conservative PII regex; the redactor should reduce this to near-zero. We also include a policy-violation rate where the guard classified an output as unsafe or requiring human confirmation, and the audit completeness: fraction of decisions with complete logs (router state, redaction diffs, doc IDs).  
+
+<|ref|>text<|/ref|><|det|>[[508, 621, 919, 726]]<|/det|>
+g) Uptime and robustness.: We run \(24\mathrm{h}\) endurance tests with diurnal activity cycles. We report crash-free hours, GPU/SoC throttling minutes, and queue overflow events. For robustness to interference and environment drift, we measure performance before/after controlled perturbations: moving furniture, adding reflective surfaces, and injecting cross-traffic bursts.  
+
+<|ref|>sub_title<|/ref|><|det|>[[508, 736, 770, 750]]<|/det|>
+### F. Measurement Protocol and Fairness  
+
+<|ref|>text<|/ref|><|det|>[[507, 755, 917, 785]]<|/det|>
+To avoid optimism from warm caches and friendly scheduling, we adopt the following principles.  
+
+<|ref|>text<|/ref|><|det|>[[507, 786, 918, 860]]<|/det|>
+a) Warm vs. cold phases.: Each day starts with a controlled cold start for caches, indices, and LLM runtime. We measure the first 30 minutes separately and then report the remaining 8-10 hours as the steady phase. Serverless baselines include explicit cold starts.  
+
+<|ref|>text<|/ref|><|det|>[[507, 862, 918, 905]]<|/det|>
+b) Concurrency and arrival processes.: We replay arrival streams recorded in HL and LO; for HM we inject Poisson bursts during visiting hours. The router is allowed to batch

@@ -1,0 +1,62 @@
+
+- Temporal Shift (TS): train on the first two-thirds of days, test on the remaining third including open-set events.  
+
+
+Within each protocol, we perform five stratified folds at the episode level to avoid leakage. For ablations (e.g., removal of Edge- RAG or quantization), we keep the train/val/test splits identical to the full model to isolate component contributions. For all metrics that depend on plausible long- range state (e.g., cache hit rates, streaming latency), we run evaluations as continuous day- long streams without shuffling.  
+
+
+g) Labeling cost and ambiguity.: Event annotations are inherently fuzzy at boundaries and when multiple actors overlap. We therefore allow a \(\pm 1\) s tolerance during episode boundary scoring and report both strict and tolerant F1. For explanations, three annotators rate a \(10\%\) sampled set using two rubrics: (i) factual consistency with evidence and sensor context; and (ii) helpfulness relative to site policies. Disagreements are adjudicated by majority vote; Cohen's \(\kappa\) on binary consistency is 0.78.  
+
+
+### B. Hardware and Deployment Environments  
+
+
+We target commodity edge boxes rather than bespoke accelerators.  
+
+
+a) Edge compute nodes.: Our primary edge is an embedded SoC with an 8-core CPU and a modest GPU (e.g., Orin Nano/Xavier-class) running Ubuntu LTS, CUDA where available, and a recent libtorch/TensorRT. A secondary edge is an x86 NUC with a 6-core CPU and a low-profile GPU. Both hosts include NVMe storage for fast codebook, KV, and retrieval indices. Power is supplied via PoE or a battery pack with a USB-C inline power meter.  
+
+
+b) Sensors and network.: Wi-Fi APs are off-the-shelf dual-band routers; CSI capture uses commodity NICs configured in monitor mode. IMUs are COTS wristbands; the microphone is a far-field USB device. RFID readers are UHF with simple loop antennas near doorways. All sensors connect via local Ethernet/Wi-Fi; the edge node sits on the same LAN. For cloud escalation, the WAN link is throttled in three profiles to emulate realistic variability: Good \((\approx 100\mathrm{Mbps}\) down / \(20\mathrm{Mbps}\) up, \(15\mathrm{ms}\) RTT), Moderate \((30 / 10\mathrm{Mbps}\) \(40\mathrm{ms}\) RTT), and Poor \((8 / 4\mathrm{Mbps}\) \(80\mathrm{ms}\) RTT). We generate background traffic (web, video) to create bursty contention.  
+
+
+c) Cloud tier.: When escalation occurs, prompts are sent to a GPU-backed VM with a modern LLM service. We explicitly record prefill/decoding times and token throughput to separate local queuing effects from remote inference characteristics, consistent with disaggregation studies [16], [23]. We do not fine-tune any cloud model; only the prompt format adheres to the contract in Method.  
+
+
+d) Runtimes and kernels.: On the edge we enable FlashAttention-2-style kernels and a fused layernorm+GEMM path where supported [11]. The local LLM (1.8-3B parameters) runs in 4/8-bit; KV cache is optionally quantized to 2-4 bits with a calibration subset to preserve quality under long streams [12], [47]. Retrieval uses an HNSW index for dense embeddings and a compressed inverted index for BM25, co-located on NVMe.  
+
+
+e) Energy and temperature control.: All runs take place in rooms with ambient temperature 22-26 C. We log SoC temperatures and clock throttling events. Energy per decision is measured by integrating instantaneous power from the inline meter and subtracting a measured idle baseline (NICs, AP, and sensors attached) determined at the start of each day.  
+
+
+### C. Baselines  
+
+
+We compare CoSense- LLM to the following configurations, each chosen to isolate a design axis.  
+
+
+a) Cloud-only LLM.: Raw or lightly summarized signals are converted to verbose textual sketches on the edge and sent to the cloud LLM without local retrieval. This baseline highlights the end-to-end latency and bandwidth penalties and the privacy cost of shipping fine-grained descriptions upstream.  
+
+
+b) Edge classifier + templates.: A strong non-LLM baseline uses a supervised edge classifier for events and a hand-written template library for explanations, common in classical sensing stacks. This exposes the quality gap in open-set or ambiguous situations where fixed templates fail.  
+
+
+c) Edge LLM without RAG.: Local generation from Z without retrieval, to quantify the grounding benefit supplied by Edge-RAG [33].  
+
+
+d) Partitioned serving (split inference.): A split graph places early layers of a compact LLM on edge and the remainder in cloud, akin to [22], [70]. We use the same router but disable local-only terminal actions, forcing cooperative execution.  
+
+
+e) Serverless function LLM.: An on-demand LLM service with cold starts, following [8]. This probes tail latency under bursty arrivals.  
+
+
+f) Ablation variants.: We remove components: (i) no PromptRouter (always Edge+RAG); (ii) no Edge-RAG; (iii) no KV compression; (iv) no speculative or lookahead decoding; (v) no LoRA adapters. We also compare quantization levels (FP16 vs. INT8 vs. 4-bit) and KV policies (paged vs. streaming) [11], [12], [47].  
+
+
+### D. Training and Hyperparameters  
+
+
+We separate training for representation, tokenization, and generation, mirroring the curriculum in Method.  
+
+
+a) SenseFusion and codebook.: Modality adapters use lightweight 1D/2D CNN stems (channels 32-64) and a two-block transformer fuse with width \(d = 256\) . The VQ codebook has \(V \in \{256, 512\}\) entries; we allocate \(K = 16\) codes per window by default. We train with AdamW, peak LR \(3 \times 10^{-4}\) , cosine decay, weight decay 0.05, and label smoothing 0.1 for supervised heads. InfoNCE temperature starts at 0.07 and is learned. We anneal the VQ commitment weight from 0.1 to 0.25 over the first third of steps to prevent code collapse. EMA updates for code vectors use decay 0.99 with dead-code resurrection when utilization falls below 30%.

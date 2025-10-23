@@ -1,0 +1,39 @@
+{
+  "element_id": "page_0001_elem_0018",
+  "type": "equation",
+  "page": 1,
+  "index": 18,
+  "bounding_boxes": [
+    {
+      "x1": 969,
+      "y1": 1242,
+      "x2": 1456,
+      "y2": 1279
+    }
+  ],
+  "bounding_boxes_normalized": [
+    {
+      "x1": 0.57,
+      "y1": 0.5645454545454546,
+      "x2": 0.8564705882352941,
+      "y2": 0.5813636363636364
+    }
+  ],
+  "metrics": {
+    "num_boxes": 1,
+    "total_area": 18019,
+    "width": 487,
+    "height": 37,
+    "aspect_ratio": 13.162162162162161
+  },
+  "image_dimensions": {
+    "width": 1700,
+    "height": 2200
+  },
+  "cropped_image": {
+    "filename": "page_0001_elem_0018_equation.jpg",
+    "width": 487,
+    "height": 37,
+    "padding": 0
+  }
+}

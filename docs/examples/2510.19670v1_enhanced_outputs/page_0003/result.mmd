@@ -1,0 +1,35 @@
+
+and post- processing under realistic SLAs [43]. In parallel, collaborative and decentralized model execution in PETALS shows that peer- to- peer model serving is viable when routing and state exchange are engineered carefully, hinting at cross- site cooperation among edges [26]. The synthesis in recent surveys reinforces the momentum: on- device LMs are quickly maturing [30], and edge LLMs have distinct execution patterns that call for different model designs and serving stacks [46]. For edge latency specifically, CLONE demonstrates how customizing LLMs to device capabilities and target latency envelopes yields predictable SLOs while preserving accuracy [49].  
+
+
+### B. Memory and State for Long-Context Serving at the Edge  
+
+
+A central barrier to placing LLMs near sensors is state management. Token- by- token decoding creates large key- value (KV) caches whose footprint grows with depth and sequence length. PagedAttention in vLLM popularized a paged memory manager that treats KV as pageable blocks, delivering isolation between concurrent sequences and high GPU memory utilization [47]. Subsequent work tightens control of the cache: InfiniGen dynamically manages KV segments, improving admission and eviction policies under variable request mixes [24]. LCKV compresses the cache by layer- condensation, preserving salient history without paying the full quadratic cost [7]. For aggressive footprint cuts, KIVI shows tuning- free 2- bit asymmetric quantization for KV [37], while ZipCache demonstrates token- wise, channel- decomposed KV quantization that preserves quality at high compression [15]. Beyond data layout, streaming the cache reduces context loading stalls: DéjaVu proposes KV streaming for fast, fault- tolerant service [71] and CacheGen compresses and streams KV to accelerate long prompts [12]. For very long contexts, ShadowKV leverages a shadow hierarchy to keep hot segments close and cold segments off the fast path, improving throughput while bounding memory [41]. These mechanisms are especially relevant for edges that must retain ongoing situational traces (e.g., a sliding window of Wi- Fi CSI derived events) without growing memory unbounded.  
+
+
+### C. Disaggregation, Serverless Execution, and In-Storage Attention  
+
+
+At the system plane, separating prefill from decoding unlocks new scheduling regimes that fit bursty edge workloads. DistServe disaggregates prefill and decoding into specialized pools, smoothing utilization and reducing head- of- line blocking [16]. Sarathi- Serve explicitly addresses the throughput- latency frontier, showing how batching, prioritization, and preemption policies can be tuned to sustain low tails [23]. For elastic edges, ServerlessLLM lowers cold- start and overprovisioning costs, providing low- latency function- style LLM inference suitable for intermittent IoT/edge requests [8]. When the storage stack is available close to compute, InstInfer explores in- storage attention offloading to reduce host- device traffic and amortize memory pressure [50]. Complementarily,  
+
+
+DeepSpeed- FastGen integrates MII and inference runtime optimizations to raise effective throughput without sacrificing per- request latency [54]. These directions, though often evaluated in datacenters, are directly extensible to multi- tenant edge micro- datacenters where compute, storage, and network are co- located in constrained form factors.  
+
+
+### D. Kernel- and Algorithm-Level Acceleration  
+
+
+Low- latency edge inference relies on kernels that exploit hardware efficiently. FlashAttention- 2 revisits attention as a tiled IO- aware kernel with improved work partitioning, raising throughput and reducing memory movement [11]. FlashDecoding++ extends this path to the decoding stage, optimizing the step- wise compute bound in autoregressive generation [6]. On the algorithmic side, speculative and parallel decoding reduce the number of expensive forward steps per committed token. SpecInfer builds a tree of speculative candidates with verification, while Medusa attaches multiple decoding heads to propose drafts, both delivering speedups without fine- grained accuracy loss [31], [40]. Lookahead decoding breaks strict sequential dependence by overlapping future computations [53], and EAGLE reframes speculative sampling under feature uncertainty [72]. Work on token- utility prediction, such as H2O and SnapKV, biases compute toward informative tokens or history, effectively shrinking the active state [36], [73]. Streaming strategies like Attention Sinks preserve stability in long sessions with limited context windows [44]. For edges, these accelerations couple with cost- aware routing to decide when to continue locally and when to escalate across tiers.  
+
+
+### E. Compression, Quantization, and Adapter Serving for Personalization  
+
+
+Edge constraints foreground compression not just as a deployment step but as an online control knob. Post- training quantization methods, notably GPTQ and SmoothQuant, characterize where precision can be safely lowered [2], [27]. Activation- aware strategies and system co- design such as AWQ and QServe align calibration with serving- time memory managers and kernel choices, showcasing 4/8- bit paths at scale [4], [10]. Fine- tuning in tight memory budgets is enabled by low- rank adapters (LoRA) and their quantized variant QLoRA, enabling per- tenant or per- site specialization with small deltas [20], [74]. At serving time, multi- tenant adapter routing is a first- class concern; S- LoRA and Punica serve thousands of adapters concurrently with compact switching and cache sharing [3], [52]. On- device modeling complements these trends: MobileLLM studies sub- billion- parameter models tailored for edge CPUs/NPUs [58], and MobileVLM V2 shows that mobile- grade vision- language stacks are already useful baselines for multimodal tasks [19]. The survey perspective [30], [46] frames these pieces as a coherent co- design story across compression, runtime, and application quality.  
+
+
+### F. Offloading and Heterogeneous Execution  
+
+
+When edges cannot host full models, offloading becomes necessary. FlexGen demonstrates high- throughput generation
