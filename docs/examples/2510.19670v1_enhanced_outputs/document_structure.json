@@ -1,0 +1,179 @@
+{
+  "document_metadata": {
+    "source_file": "/mnt/partition2/proj/DeepSeek-OCR-CPU/test_files/pdf/2510.19670v1.pdf",
+    "filename": "2510.19670v1.pdf",
+    "num_pages": 19,
+    "total_elements": 289
+  },
+  "pages": [
+    {
+      "page": 1,
+      "num_elements": 8,
+      "element_types": [
+        "title",
+        "sub_title",
+        "text"
+      ]
+    },
+    {
+      "page": 2,
+      "num_elements": 11,
+      "element_types": [
+        "sub_title",
+        "text"
+      ]
+    },
+    {
+      "page": 3,
+      "num_elements": 12,
+      "element_types": [
+        "sub_title",
+        "text"
+      ]
+    },
+    {
+      "page": 4,
+      "num_elements": 11,
+      "element_types": [
+        "sub_title",
+        "text"
+      ]
+    },
+    {
+      "page": 5,
+      "num_elements": 12,
+      "element_types": [
+        "sub_title",
+        "text"
+      ]
+    },
+    {
+      "page": 6,
+      "num_elements": 19,
+      "element_types": [
+        "equation",
+        "image_caption",
+        "text",
+        "sub_title",
+        "image"
+      ]
+    },
+    {
+      "page": 7,
+      "num_elements": 26,
+      "element_types": [
+        "sub_title",
+        "text",
+        "equation"
+      ]
+    },
+    {
+      "page": 8,
+      "num_elements": 22,
+      "element_types": [
+        "sub_title",
+        "text",
+        "equation"
+      ]
+    },
+    {
+      "page": 9,
+      "num_elements": 16,
+      "element_types": [
+        "sub_title",
+        "text"
+      ]
+    },
+    {
+      "page": 10,
+      "num_elements": 21,
+      "element_types": [
+        "sub_title",
+        "text"
+      ]
+    },
+    {
+      "page": 11,
+      "num_elements": 18,
+      "element_types": [
+        "sub_title",
+        "text"
+      ]
+    },
+    {
+      "page": 12,
+      "num_elements": 21,
+      "element_types": [
+        "sub_title",
+        "text"
+      ]
+    },
+    {
+      "page": 13,
+      "num_elements": 17,
+      "element_types": [
+        "table_caption",
+        "table_footnote",
+        "table",
+        "image_caption",
+        "text",
+        "sub_title",
+        "image"
+      ]
+    },
+    {
+      "page": 14,
+      "num_elements": 19,
+      "element_types": [
+        "table_caption",
+        "table",
+        "image_caption",
+        "text",
+        "sub_title",
+        "image"
+      ]
+    },
+    {
+      "page": 15,
+      "num_elements": 19,
+      "element_types": [
+        "sub_title",
+        "image_caption",
+        "image",
+        "text"
+      ]
+    },
+    {
+      "page": 16,
+      "num_elements": 18,
+      "element_types": [
+        "sub_title",
+        "image_caption",
+        "image",
+        "text"
+      ]
+    },
+    {
+      "page": 17,
+      "num_elements": 15,
+      "element_types": [
+        "sub_title",
+        "text"
+      ]
+    },
+    {
+      "page": 18,
+      "num_elements": 2,
+      "element_types": [
+        "text"
+      ]
+    },
+    {
+      "page": 19,
+      "num_elements": 2,
+      "element_types": [
+        "text"
+      ]
+    }
+  ]
+}

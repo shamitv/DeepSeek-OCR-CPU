@@ -1,0 +1,51 @@
+![](images/0.jpg)
+
+
+<center>Fig. 7: Ablation on retrieval depth \(k\) : factual consistency (left axis) vs. latency (right axis) on LO. </center>  
+
+![](images/1.jpg)
+
+
+<center>Fig. 8: Throughput vs. p95 latency under the Moderate link across methods. </center>  
+
+
+linger, cart motion in restricted zones). Sentence- level citations to retrieved snippets appear in \(70 - 80\%\) of outputs; contradiction checks via the on- edge NLI head flag a small residual set, which the router escalates or abstains from. This matches the expected workflow of hybrid retrieval [33].  
+
+
+c) Failure modes.: Key failures include: (i) subtle multipath changes causing code misassignment; (ii) over- summarization when the router forces short outputs under energy pressure; and (iii) misleading retrievals when sparse matches dominate. The first is mitigated by adapter updates and federated rounds; the second by learned length control; the third by raising \(\Gamma\) weight and preferring dense+consistency-checked bundles, akin to RAGCache heuristics [18]. In HM, rare paired cough and posture changes occasionally trigger escalations; we accept the latency hit for safety.  
+
+
+### E. Robustness and Privacy  
+
+
+a) Interference and drift.: Under induced interference (microwave on, additional reflective surfaces), SenseFusion's phase- and correlation-robust processing holds up better than amplitude-only features, echoing PhaseAnti and correlation-selection results [13], [29]. Macro-F1 drops modestly but  
+
+
+recovers after light adapter updates. Open- set abstention rises appropriately; escalations increase by design.  
+
+
+b) Security probes.: We emulate PHY fingerprint attacks and acoustic side-channels by injecting edge-node probes. Because raw waveforms never leave the device and prompts carry only codes and redacted metadata, WAN exposure of sensitive patterns is negligible. PII leakage risk remains near-zero after redaction; audit completeness is high as the router logs state and redactions per decision. These practices respond directly to demonstrated attack vectors in PHY authentication and acoustic eavesdropping [38], [42].  
+
+
+c) Privacy vs. utility.: We quantify privacy proxies (zero raw leakage and near-zero PII strings) alongside utility; grounded explanations retain clinical and operational value without transmitting raw data. This supports site adoption in scenarios where camera-based monitoring is unacceptable and RF/IMU alternatives are preferred, in line with Wi-Fi-based emotion and respiratory sensing works [9], [32], [34].  
+
+
+### F. Sensitivity and Scaling  
+
+
+a) Code length \(K\) : Increasing \(K\) improves recognition and explanation consistency until saturation; beyond 32, latency and tokens rise with little gain. We adopt \(K = 16\) in most runs. This confirms the value of compact semantic interfaces for edge-cloud cooperation.  
+
+
+b) Retrieval parameters.: Dense embedding dimension (256-768) trades off recall and latency; HNSW parameters \((M,ef)\) modulate tail latency. We find 384-d embeddings with \(M = 32\) and \(ef = 64\) adequate; raising \(ef\) further trims contradiction at a cost in tail latency, echoing hybrid retrieval tuning advice [33].  
+
+
+c) WAN profiles and serverless colds.: In Poor WAN, escalation p95 grows with cold starts in serverless baselines [8]. The router curtails escalations and caps output length, sustaining SLA hit rate. Partitioned serving remains sensitive to WAN jitter because each request traverses the link; our approach localizes routine decisions and attributions.  
+
+
+d) Concurrency and memory headroom.: Streaming KV and ZipCache-like quantization allow more concurrent sessions before thrashing [12], [15]. The cache hit ratio grows with temporal locality; EDGE+RAG reuses prior doc IDs across adjacent windows. Compared to vLLM-style paging alone [47], combining paging with streaming for long histories yields more stable FTT.  
+
+
+### G. Comparisons to Related Systems  
+
+
+a) Split and collaborative serving.: Compared to cloud-edge split stacks [22], [43], [70], our pipeline reduces WAN tokens and avoids streaming raw or verbose sensory descriptions, cutting latency and privacy risk on routine tasks. Collaborative designs like PETALS hint at peer-to-peer sharing for model shards [26]; our caching and attribution mechanisms would extend naturally to such settings, with audit trails necessary for multi-tenant edges.

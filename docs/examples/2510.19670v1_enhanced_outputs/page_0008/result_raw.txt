@@ -1,0 +1,65 @@
+<|ref|>text<|/ref|><|det|>[[78, 62, 490, 152]]<|/det|>
+are sparse; adapter deltas are compressed with top- \(k\) and error feedback. A small KKT- style projection ensures that privacy masks (e.g., no raw features from sensitive hours) are respected. Forgetting is alleviated by elastic penalties on adapter growth; if adapters saturate, we expand a block by one rank (analogous to block expansion) and prune later.  
+
+<|ref|>sub_title<|/ref|><|det|>[[78, 167, 455, 181]]<|/det|>
+### H. Implementation: Runtime Optimizations on the Edge  
+
+<|ref|>text<|/ref|><|det|>[[78, 187, 489, 337]]<|/det|>
+a) Memory and kernels.: We rely on paged KV management and tiled attention kernels to keep local generation smooth under concurrency. FlashAttention-2-style kernels reduce HBM traffic; decode-time pipelines overlap token sampling with Edge-RAG fetch and post-processing. KV entries are optionally quantized (2-4 bit) with outlier-aware dequant on-the-fly. On Jetson-class SOCs, we pin the VQ bottleneck and retrieval embedding into FP16 and fuse layer-norm + matmul. We persist KV segments across short sessions to exploit temporal locality, while invalidating on context drift.  
+
+<|ref|>text<|/ref|><|det|>[[78, 338, 489, 443]]<|/det|>
+b) Scheduling and backpressure.: Router decisions produce per-request SLOs; a lightweight EDF scheduler admits requests and downshifts quantization when queues grow. If bandwidth dips, EDGE-ONLY is preferred and the response is shorter (token cap). If energy crosses a threshold, we park the local LLM and answer with EDGE+RAG templated summaries until the battery recovers.  
+
+<|ref|>text<|/ref|><|det|>[[78, 444, 489, 533]]<|/det|>
+c) KV and evidence caching.: We memoize \((Z, \mathcal{D}) \mapsto E\) pairs with semantic hashing. Cache entries store: code sequence, doc IDs, de-identified entities, the chosen action, and a checksum of the prompt body. Aged entries are distilled into a compact exemplar bank to support instruction-tuning refreshes.  
+
+<|ref|>sub_title<|/ref|><|det|>[[78, 548, 270, 562]]<|/det|>
+### I. Safety, Privacy, and Audit  
+
+<|ref|>text<|/ref|><|det|>[[78, 568, 489, 643]]<|/det|>
+a) Data minimization.: By design, raw waveforms never leave the device. Only \(Z\) (discrete codes) and redacted metadata are eligible for inter-tier messages. We attach differential-identifiers instead of names and delete geo-coordinates unless a policy explicitly requires them.  
+
+<|ref|>text<|/ref|><|det|>[[78, 645, 489, 735]]<|/det|>
+b) Policy guard and refusal.: A simple regex + small classifier stack scans prompts and evidence for forbidden topics or unsafe actions; if triggered, the router either abstains or requests human confirmation. We log a structured trace: (timestamp, action, \(u\) , \(C\) , redaction diffs, doc IDs), enabling audits without revealing content.  
+
+<|ref|>sub_title<|/ref|><|det|>[[78, 750, 333, 764]]<|/det|>
+### J. Complexity and Resource Envelope  
+
+<|ref|>text<|/ref|><|det|>[[77, 771, 489, 830]]<|/det|>
+a) Encoding and quantization.: Let \(C_{\phi}\) be the per-window FLOPs of adapters \(\{\phi_{m}\}\) and \(C_{\mathrm{fuse}}\) for fusion layers. VQ adds \(O(KdV)\) naive lookup, but product-quantized codebooks reduce lookup to \(O(Kd\sqrt[3]{V})\) with SIMD.  
+
+<|ref|>text<|/ref|><|det|>[[78, 832, 489, 906]]<|/det|>
+b) Retrieval.: Dense retrieval requires \(O(\log N)\) with HNSW (empirically sub-millisecond for \(N \leq \mathrm{few} \times 10^{5}\) on embedded CPUs), while BM25 queries are \(O(|q| + \mathrm{df})\) for postings scans. Consistency \(\Gamma\) with \(k\) snippets uses \(O(k^{2})\) NLI passes of a tiny head (where \(k \leq 5\) ).  
+
+<|ref|>text<|/ref|><|det|>[[507, 62, 918, 106]]<|/det|>
+c) Routing.: Computing \(u\) uses a handful of MC passes of tiny heads \((\leq 8)\) and a linear regression for cost predictors. Building \(\Pi (Z, \mathcal{D})\) is linear in token count.  
+
+<|ref|>sub_title<|/ref|><|det|>[[508, 117, 840, 132]]<|/det|>
+### K. Ablations and Diagnostics (Design Rationale)  
+
+<|ref|>text<|/ref|><|det|>[[508, 137, 919, 317]]<|/det|>
+Why discrete tokens \(Z\) ? Codes bound bandwidth and stabilize prompts: we find \(K \in [8, 32]\) suffices for most windows, yielding \(< 0.5\) KB per decision before retrieval. Why hybrid retrieval? Dense- only retrieval drifts under altered jargon; sparse- only misses paraphrases. The hybrid score (Eq. 3) combines both and defers contradictions to \(\Gamma\) . Why explicit \(u\) and \(C\) ? We observed pathological cases where the local LLM was confident but wrong after an environmental change; \(u\) flags such shifts early, while \(C\) keeps batteries alive during bursts. Why EDGE+RAG? Many cases need short, policy- grounded advisories, where cloud escalation adds latency and risk without improving utility.  
+
+<|ref|>sub_title<|/ref|><|det|>[[508, 328, 783, 343]]<|/det|>
+### L. Putting It Together: End-to-End Flow  
+
+<|ref|>text<|/ref|><|det|>[[508, 347, 919, 512]]<|/det|>
+At runtime, the edge node buffers a window \(X_{1:T}\) , computes \(H\) and codes \(Z\) , and measures \(u\) . If \(u \leq \theta_{\mathrm{edge}}\) and energy is healthy, we answer via EDGE- ONLY. Otherwise we retrieve \(\mathcal{D}\) with Eq. 3, re- evaluate \(u\) (often reduced due to added evidence), and either produce a grounded explanation locally or escalate with a compact, redacted prompt. In escalation, the payload never includes raw waveforms; only \(Z\) , a few compressed \(h\) 's, and short evidence snippets pass the boundary. The response is streamed, cached, and summarized to refresh the exemplar bank. Router parameters adjust online as we collect performance tuples \((u, C, \text{SLO hit, F1, readability})\) .  
+
+<|ref|>sub_title<|/ref|><|det|>[[508, 523, 773, 537]]<|/det|>
+### M. Loss Summary and Training Recipe  
+
+<|ref|>text<|/ref|><|det|>[[522, 542, 855, 557]]<|/det|>
+For completeness, the joint loss in Stage II- III is  
+
+<|ref|>equation<|/ref|><|det|>[[570, 564, 856, 581]]<|/det|>
+\[\mathcal{L} = \mathcal{L}_{\mathrm{align}} + \lambda_{\mathrm{VQ}}\mathcal{L}_{\mathrm{VQ}} + \lambda_{\mathrm{sup}}\mathcal{L}_{\mathrm{sup}} + \lambda_{\mathrm{IT}}\mathcal{L}_{\mathrm{IT}},\]  
+
+<|ref|>text<|/ref|><|det|>[[508, 589, 919, 725]]<|/det|>
+where \(\mathcal{L}_{\mathrm{sup}}\) is supervised event loss (focal/CB), and \(\mathcal{L}_{\mathrm{IT}}\) is instruction- tuning NLL for \((Z, \mathcal{D}) \to E\) . We anneal \(\lambda_{\mathrm{VQ}}\) in the first third of training to prevent dead codes, and employ EMA codebook updates with refresh if utilization drops below 30%. For adapters, we adopt LoRA ranks \(\in \{4, 8, 16\}\) with target modules (q_proj, k_proj, cross- attn gate), and apply 4- bit weight quantization with nf4 datatype for stable fine- tuning. During federated rounds, clients clip update norms and send only adapter deltas and sparse codebook adjustments.  
+
+<|ref|>sub_title<|/ref|><|det|>[[508, 736, 733, 750]]<|/det|>
+### N. Interfaces and Reproducibility  
+
+<|ref|>text<|/ref|><|det|>[[508, 756, 919, 905]]<|/det|>
+We provide a minimal gRPC interface with three calls: Encode() (returns \(Z\) and selected \(h\) ), Retrieve() (returns doc IDs and short snippets), and RouteAndGenerate() (returns \(a^*\) and \(E\) ). On- device we ship tiny NLI and draft heads \((\leq 10\) MB each) and a 1.8- 3B quantized LLM; on cloud, any LLM obeying the prompt contract can substitute. To reproduce, one needs: (i) 2- 3 weeks of site data to warm- start VQ and alignment; (ii) a 10- 20 MB policy corpus; and (iii) energy/latency calibrations for the target SOC. Kernel hints (FlashAttention- 2- style

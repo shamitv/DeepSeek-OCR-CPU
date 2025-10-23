@@ -1,0 +1,14 @@
+<|ref|>text<|/ref|><|det|>[[120, 90, 884, 120]]<|/det|>
+[99] Yilmaz, M. and Meister, M. Rapid innate defensive responses of mice to looming visual stimuli. Curr Biol, 23: 2011- 5, October 2013. ISSN 1879- 0445 (Electronic) 0960- 9822 (Linking). doi: 10.1016/j.cub.2013.08.015.  
+
+<|ref|>text<|/ref|><|det|>[[115, 127, 884, 184]]<|/det|>
+[100] Kim, T., Shen, N., Hsiang, J.- C., Johnson, K., and Kerschensteiner, D. Dendritic and parallel processing of visual threats in the retina control defensive responses. Science Advances, 6(47): eabc9920, November 2020. doi: 10.1126/sciadv.abc9920. URL https://www.science.org/doi/10.1126/sciadv.abc9920. Publisher: American Association for the Advancement of Science.  
+
+<|ref|>text<|/ref|><|det|>[[115, 192, 883, 237]]<|/det|>
+[101] Wang, F., Li, E., De, L., Wu, Q., and Zhang, Y. OFF- transient alpha RGCs mediate looming triggered innate defensive response. Current Biology, 0(0), April 2021. ISSN 0960- 9822. doi: 10.1016/j.cub.2021.03.025. URL https://www.cell.com/current- biology/abstract/S0960- 9822(21)00364- X. Publisher: Elsevier.  
+
+<|ref|>text<|/ref|><|det|>[[115, 245, 883, 301]]<|/det|>
+[102] Reinhard, K., Li, C., Do, Q., Burke, E. G., Heynderickx, S., and Farrow, K. A projection specific logic to sampling visual inputs in mouse superior colliculus. eLife, 8:e50697, November 2019. ISSN 2050- 084X. doi: 10.7554/eLife.50697. URL https://doi.org/10.7554/eLife.50697. Publisher: eLife Sciences Publications, Ltd.  
+
+<|ref|>text<|/ref|><|det|>[[115, 309, 883, 366]]<|/det|>
+[103] Hoy, J. L., Bishop, H. I., and Niell, C. M. Defined Cell Types in Superior Colliculus Make Distinct Contributions to Prey Capture Behavior in the Mouse. Current biology: CB, 29(23):4130- 4138. e5, December 2019. ISSN 1879- 0445. doi: 10.1016/j.cub.2019.10.017. URL https://www.cell.com/current- biology/abstract/S0960- 9922(19)31323- 5.

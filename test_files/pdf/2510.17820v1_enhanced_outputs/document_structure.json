@@ -1,0 +1,136 @@
+{
+  "document_metadata": {
+    "source_file": "/mnt/partition2/proj/DeepSeek-OCR-CPU/test_files/pdf/2510.17820v1.pdf",
+    "filename": "2510.17820v1.pdf",
+    "num_pages": 16,
+    "total_elements": 216
+  },
+  "pages": [
+    {
+      "page": 1,
+      "num_elements": 10,
+      "element_types": [
+        "text",
+        "sub_title",
+        "title"
+      ]
+    },
+    {
+      "page": 2,
+      "num_elements": 7,
+      "element_types": [
+        "text",
+        "image_caption",
+        "sub_title",
+        "image"
+      ]
+    },
+    {
+      "page": 3,
+      "num_elements": 11,
+      "element_types": [
+        "text",
+        "sub_title"
+      ]
+    },
+    {
+      "page": 4,
+      "num_elements": 16,
+      "element_types": [
+        "text",
+        "sub_title",
+        "equation"
+      ]
+    },
+    {
+      "page": 5,
+      "num_elements": 14,
+      "element_types": [
+        "text",
+        "sub_title"
+      ]
+    },
+    {
+      "page": 6,
+      "num_elements": 11,
+      "element_types": [
+        "text",
+        "sub_title"
+      ]
+    },
+    {
+      "page": 7,
+      "num_elements": 13,
+      "element_types": [
+        "text",
+        "sub_title"
+      ]
+    },
+    {
+      "page": 8,
+      "num_elements": 13,
+      "element_types": [
+        "text",
+        "sub_title"
+      ]
+    },
+    {
+      "page": 9,
+      "num_elements": 13,
+      "element_types": [
+        "text",
+        "sub_title"
+      ]
+    },
+    {
+      "page": 10,
+      "num_elements": 19,
+      "element_types": [
+        "text",
+        "sub_title"
+      ]
+    },
+    {
+      "page": 11,
+      "num_elements": 17,
+      "element_types": [
+        "text"
+      ]
+    },
+    {
+      "page": 12,
+      "num_elements": 18,
+      "element_types": [
+        "text"
+      ]
+    },
+    {
+      "page": 13,
+      "num_elements": 16,
+      "element_types": [
+        "text"
+      ]
+    },
+    {
+      "page": 14,
+      "num_elements": 18,
+      "element_types": [
+        "text"
+      ]
+    },
+    {
+      "page": 15,
+      "num_elements": 15,
+      "element_types": [
+        "text"
+      ]
+    },
+    {
+      "page": 16,
+      "num_elements": 5,
+      "element_types": [
+        "text"
+      ]
+    }
+  ]
+}

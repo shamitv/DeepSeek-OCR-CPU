@@ -1,0 +1,26 @@
+<|ref|>title<|/ref|><|det|>[[113, 120, 936, 171]]<|/det|>
+# Semi-analytical pricing of American options with hybrid dividends via integral equations and the GIT method  
+
+<|ref|>text<|/ref|><|det|>[[142, 186, 256, 204]]<|/det|>
+Andrey Itkin  
+
+<|ref|>text<|/ref|><|det|>[[115, 223, 729, 238]]<|/det|>
+FRE Department, Tendon School of Engineering, New York University, email: aitkin@nyu.edu  
+
+<|ref|>text<|/ref|><|det|>[[448, 340, 592, 356]]<|/det|>
+October 22, 2025  
+
+<|ref|>text<|/ref|><|det|>[[160, 393, 882, 653]]<|/det|>
+T his paper introduces a semi- analytical method for pricing American options on assets (stocks, ETFs) that pay discrete and/or continuous dividends. The problem is notoriously complex because discrete dividends create abrupt price drops and affect the optimal exercise timing, making traditional continuous- dividend models unsuitable. Our approach utilizes the Generalized Integral Transform (GIT) method introduced by the author and his co- authors in a number of papers, which transforms the pricing problem from a complex partial differential equation with a free boundary into an integral Volterra equation of the second or first kind. In this paper we illustrate this approach by considering a popular GBM model that accounts for discrete cash and proportional dividends using Dirac delta functions. By reframing the problem as an integral equation, we can sequentially solve for the option price and the early exercise boundary, effectively handling the discontinuities caused by the dividends. Our methodology provides a powerful alternative to standard numerical techniques like binomial trees or finite difference methods, which can struggle with the jump conditions of discrete dividends by losing accuracy or performance. Several examples demonstrate that the GIT method is highly accurate and computationally efficient, bypassing the need for extensive computational grids or complex backward induction steps.  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 720, 288, 740]]<|/det|>
+## 1 Introduction  
+
+<|ref|>text<|/ref|><|det|>[[114, 754, 929, 822]]<|/det|>
+The valuation of American- style options is a nuanced and critically important challenge in quantitative finance. Unlike European options, American options can be exercised at any time before expiration, creating a complex optimal stopping problem. The holder must continuously decide whether to capture the option's immediate intrinsic value or retain it for potential future gains.  
+
+<|ref|>text<|/ref|><|det|>[[114, 823, 929, 873]]<|/det|>
+This challenge is profoundly complicated by discrete dividends. These lump- sum payments cause predictable drops in the underlying stock price, creating a powerful incentive for early exercise just before the ex- dividend date. Accurately determining the optimal exercise boundary is therefore paramount.  
+
+<|ref|>text<|/ref|><|det|>[[112, 874, 928, 908]]<|/det|>
+Pricing these instruments is more than an academic exercise; it is a vital task for traders, risk managers, and arbitrageurs. The standard Black- Scholes- Merton framework, which assumes a continuous dividend

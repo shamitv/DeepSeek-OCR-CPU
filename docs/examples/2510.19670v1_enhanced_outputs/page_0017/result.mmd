@@ -1,0 +1,44 @@
+
+b) Kernel and cache managers.: Our latency/energy reductions align with kernel- and cache-centric literature [11], [12], [15], [24]. Where those works optimize internal loops, CoSense-LLM complements them by reducing the need for expensive loops through uncertainty-aware routing and compact interfaces.  
+
+
+c) On-device and mobile models.: MobileLLM and MobileVLM show that sub-billion parameter stacks can be competitive in constrained tasks [19], [58]. Our results suggest that even modest on-edge language backbones, when paired with semantic codes and retrieval, can meet stringent SLAs while delivering helpful explanations. Adapter serving techniques such as S-LoRA and Punica [3], [52] would further cut pertenant overhead if we expand to multi-user deployments.  
+
+
+### H. Limitations and Failure Analysis  
+
+
+a) Rare events and over-abstention.: Discrete codes occasionally under-represent rare, subtle events (e.g., brief prefall sway). The router tends to abstain or escalate, protecting safety at the cost of latency. Increasing \(K\) temporarily helps but degrades SLA compliance; future work may incorporate adaptive-rate coding or hybrid sketches.  
+
+
+b) Retrieval brittleness.: Hybrid retrieval still admits occasional off-topic snippets when jargon overlaps (e.g., "fall" in non-clinical contexts). Stronger \(\Gamma\) and doc-type priors mitigate this. Incorporating structured knowledge graphs could further reduce contradictions.  
+
+
+c) Environmental drift.: Long-term drift (renovations) reduces code stability; periodic federated rounds and adapter resets counteract it. Persistent drift may require codebook refreshes and short re-alignment phases, echoing adaptive learning principles in edge FL [17], [60], [61].  
+
+
+### I. Broader Implications  
+
+
+a) Safety and auditability.: By logging router decisions, redactions, and evidence IDs, we enable post-hoc audits without exposing raw data. This practice directly addresses concerns raised by PHY and acoustic side-channel attacks [38], [42]. In regulated settings, such audit trails and local processing will likely be mandatory.  
+
+
+b) Interoperability.: Because the interface to LLMs is compact and structured, we can swap in different backbones (local or cloud) with minimal changes, benefiting from evolving kernels and cache managers [11], [47]. Similarly, retrieval indices and templates can be updated without retraining encoders.  
+
+
+c) Scaling out.: Peer-assisted serving (PETALS) and serverless pools offer elasticity [8], [26]. Our router's cost model can be extended to include peering costs and adapter availability, paving the way for cooperative edges that share knowledge and capacity safely.  
+
+
+### J. Summary of Findings  
+
+
+Across homes, labs, and clinics, CoSense- LLM delivers grounded explanations within tight latency and energy envelopes by combining compact semantics, on- edge retrieval,  
+
+
+and cost- uncertainty- aware routing. It improves recognition and explanation quality over non- LLM baselines, keeps privacy proxies near zero by avoiding raw data egress, and outperforms partitioned/cloud baselines in p95 latency under variable WAN. Ablations confirm that Edge- RAG, calibrated uncertainty, KV compression, and decoding accelerators jointly yield the observed gains. Personalization via adapters and federated rounds stabilizes performance under environmental and subject drift, consistent with federated learning evidence [51], [55], [56], [60], [61]. These results support the design choice of semantics- at- the- edge with principled cooperation, and suggest that the broader edge AI community can leverage similar interfaces to translate continuous sensor streams into verifiable, privacy- preserving language understanding.  
+
+
+## REFERENCES  
+
+
+[1] Lianmin Zheng, Liangsheng Yin, Zhiqiang Xie, Chuyue Sun, Jeff Huang, Cody Hao Yu, Shiyi Cao, Christos Kozyrakis, Ion Stoica, Joseph E. Gonzalez, Clark Barrett, and Ying Sheng. Sglang: Efficient execution of structured language model programs. arXiv preprint arXiv:2312.07104, 2024. [2] Elias Frantar, Saleh Ashkboos, Torsten Hoefler, and Dan Alistarh. Gptq: Accurate post-training quantization for generative pre-trained transformers. In International Conference on Learning Representations (ICLR), 2023. [3] Ying Sheng, Shiyi Cao, Dacheng Li, Coleman Hooper, Nicholas Lee, Shuo Yang, Christopher Chou, Banghua Zhu, Lianmin Zheng, Kurt Keutzer, Joseph E. Gonzalez, and Ion Stoica. S- lora: Serving thousands of concurrent lora adapters. In Proceedings of MLSys, 2024. [4] Ji Lin, Jiaming Tang, Haotian Tang, Shang Yang, Wei- Ming Chen, Wei- Chen Wang, Guangxuan Xiao, Xingyu Dang, Chuang Gan, and Song Han. Awq: Activation- aware weight quantization for llm compression and acceleration. arXiv preprint arXiv:2306.00978, 2024. [5] Jianchun Liu, Shilong Wang, Hongli Xu, Yang Xu, Yunming Liao, Jinyang Huang, and He Huang. Federated learning with experience- driven model migration in heterogeneous edge networks. IEEE/ACM Transactions on Networking, 32(4):3468- 3484, 2024. [6] Kaiqi Hong et al. Flashdecoding++: Faster large language model inference on gpus. In Proceedings of MLSys, 2024. [7] Haoyi Wu and Kewei Tu. Layer- condensed kv cache for efficient inference of large language models. In Proceedings of the 62nd Annual Meeting of the ACL (Long Papers), 2024. [8] Yao Fu, Leyang Xue, Yeqi Huang, Andrei- Octavian Brabete, Dmitrii Ustiugov, Yuvraj Patel, and Luo Mai. Serverlessllm: Low- latency serverless inference for large language models. arXiv preprint arXiv:2401.14351, 2024. [9] Meng Wang, Jinyang Huang, Xiang Zhang, Zhi Liu, Meng Li, Peng Zhao, Huan Yan, Xiao Sun, and Mianxiong Dong. Target- oriented wifi sensing for respiratory healthcare: from indiscriminate perception to in- area sensing. IEEE Network, pages 1- 1, 2024. [10] Ji Lin, Jiaming Tang, Haotian Tang, Shang Yang, Wei- Mings Chen, Wei- Chen Wang, Guangxuan Xiao, Xingyu Dang, Chuang Yan, and Song Han. Qserve: W4a8kv4 quantization and system co- design for efficient llm serving. arXiv preprint arXiv:2405.04532, 2024. [11] Tri Dao. Flashattention- 2: Faster attention with better parallelism and work partitioning. arXiv preprint arXiv:2307.08691, 2023. [12] Yuyan Liu et al. Cachegen: Kv cache compression and streaming for fast context loading of llms. In Proceedings of the ACM SIGCOMM 2024 Conference, 2024. [13] Jinyang Huang, Bin Liu, Chenglin Miao, Yan Lu, Qijia Zheng, Yu Wu, Jiancun Liu, Lu Su, and Chang Wen Chen. Phaseanti: An anti- interference wifi- based activity recognition system using interference- independent phase component. IEEE Transactions on Mobile Computing, 22(5):2938- 2954, 2023. [14] Ying Sheng, Lianmin Zheng, Binhang Yuan, Zhuohan Li, Max Ryabinin, Daniel Y. Fu, Zhiqiang Xie, Beidi Chen, Clark Barrett, Joseph E. Gonzalez, Percy Liang, Christopher Ré, Ion Stoica, and Ce Zhang. Flexgen: High- throughput generative inference of large language models with a single gpu. arXiv preprint arXiv:2303.06865, 2023.

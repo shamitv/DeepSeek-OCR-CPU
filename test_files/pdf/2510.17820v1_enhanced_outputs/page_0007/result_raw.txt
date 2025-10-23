@@ -1,0 +1,38 @@
+<|ref|>text<|/ref|><|det|>[[115, 90, 882, 133]]<|/det|>
+Texture sensitivity: Ganglion cells often respond strongly to texture patterns that are much finer than the size of the receptive field. By localizing bipolar cells and mapping their non- linear output function, one can explain such texture responses in detail [68, 74].  
+
+<|ref|>text<|/ref|><|det|>[[115, 139, 882, 208]]<|/det|>
+Direction selectivity: Some ganglion cells respond strongly when an object moves through the receptive field in one direction, but not in the opposite direction. In part, this is explained by a spatial offset between excitatory (BC) and delayed inhibitory (starburst AC) inputs to the ganglion cell [17, 75], This can be captured by the synaptic weights \(w\) and \(u\) in (Eqn 4). As mentioned above, another component of direction- selectivity relies on dendritic processing within the starburst cell [37].  
+
+<|ref|>text<|/ref|><|det|>[[115, 214, 882, 271]]<|/det|>
+Object motion sensitivity: Some ganglion cells fire when a textured object within the receptive field moves differently than its background. If the entire scene moves across the retina in concert - as happens during eye movements - these GCs remain silent. A version of the standard model with the proper choice of nonlinearity and amacrine cell contribution (Eqn 4) was shown to match these response properties in detail [35, 76, 77].  
+
+<|ref|>text<|/ref|><|det|>[[115, 276, 882, 333]]<|/det|>
+Sensitivity to approaching motion: Many retinal ganglion cells respond more strongly when a patterned surface approaches than when it recedes from the eye [78, 79]. This unexpected bias emerges naturally from the standard model, through the interplay between non- linear subunits in the center and the surround of the GC's receptive field [79]. The output nonlinearity for both types of subunits is an essential feature of this mechanism.  
+
+<|ref|>text<|/ref|><|det|>[[115, 338, 882, 408]]<|/det|>
+Motion anticipation: Certain ganglion cells seem to "anticipate" the trajectory of a moving object. These neurons fire near the leading edge of the object on the retina, rather than behind the object, as one might expect based on slow photoreceptors and synaptic delays [80, 81]. There is no precognition involved. Rather one can explain the effects based on nonlinear inputs from BCs and ACs, and some simple assumptions about their spatial distribution on the GC dendritic field [82].  
+
+<|ref|>text<|/ref|><|det|>[[115, 414, 882, 485]]<|/det|>
+Spike- latency coding: Some ganglion cells fire a short burst of spikes following both a brightening or a dimming within the receptive field. But the response latency is shorter to a dimming. In this way, the timing of the first spike following an image change on the retina can convey the content of the image [83]. This behavior results naturally because the GC sums over both on- type and off- type bipolar cells, and the kinetics \((K(t))\) of the On BCs are slightly slower [32], presumably because of delays in the metabotropic glutamate receptor pathway.  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 506, 429, 523]]<|/det|>
+## 8 Lessons from the Standard Model  
+
+<|ref|>text<|/ref|><|det|>[[115, 539, 882, 595]]<|/det|>
+Why is it that we understand the retina so well compared to just about any other part of the central nervous system? As a neural circuit with over 100 recognized cell types, and employing most of the known neurotransmitters and modulators, the retina certainly does not lack in complexity. A number of fortuitous conditions helped enable the dissection of this system.  
+
+<|ref|>text<|/ref|><|det|>[[115, 600, 882, 699]]<|/det|>
+At the conceptual level, the retina is self- contained, and it has clearly defined input and output populations, such that the explanations of function can be found entirely within the retina. An important technical advantage is that one can isolate the retina in a dish while maintaining most of its function, which makes its innards accessible to electrodes, pharmacology, and other tools. Furthermore, one can stimulate the entire input layer at single- cell resolution simply by shining patterned light on the circuit. This latter advantage can be ported to other systems through the advent of optogenetics. For example one can now stimulate the input neurons to the olfactory bulb with light patterns, which should assist in developing a quantitative model of neural processing in that circuit [84].  
+
+<|ref|>text<|/ref|><|det|>[[115, 704, 882, 733]]<|/det|>
+As a complement to the list of fortuitous conditions favoring retinal neuroscience, it is useful to consider what concepts and approaches were not needed for success in this domain.  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 751, 242, 766]]<|/det|>
+### 8.1 Oscillations?  
+
+<|ref|>text<|/ref|><|det|>[[115, 777, 882, 875]]<|/det|>
+When I started my first job, a senior professor from a rival university explained at the whiteboard that the retina is just an array of coupled oscillators. And if you only analyze it that way, you will understand how it performs Fourier transforms of the visual image. Shortly thereafter a physicist came to my office to explain how the major problem holding neuroscience back is that people don't know how to compute power spectra properly. For a young scientist entering a new discipline this felt disconcerting. Is it really all about oscillations? By now, 30 years later, we can be fairly sure about two things: There is no sense in which the retina performs a Fourier transform on the image. And second, there is no evidence that oscillations and coupled oscillators are a useful way to think about retinal processing.  
+
+<|ref|>text<|/ref|><|det|>[[115, 881, 882, 911]]<|/det|>
+Sometime in the 1990s, a number of articles in high- profile journals claimed that in fact, spontaneous oscillations were an important part of visual encoding of moving objects. In the visual cortex of the cat, neurons representing the same

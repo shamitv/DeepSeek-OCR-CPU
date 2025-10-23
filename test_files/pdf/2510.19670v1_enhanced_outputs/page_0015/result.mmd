@@ -1,0 +1,54 @@
+![](images/0.jpg)
+
+
+<center>Fig. 5: ROC for unknown-event detection (TS protocol): CoSense-LLM vs. edge classifier baseline. </center>  
+
+
+over- abstains on long, safe routines; too much on the draft head ignores upstream sensing ambiguity. A middle ground yields the best AURC and SLA hit rate. The observed monotonicity resembles calibration effects reported for streaming LLMs [44].  
+
+
+b) Thresholds \(\theta\) : Higher \(\theta_{\mathrm{edge}}\) shifts mass from EDGE-ONLY to EDGE+RAG and ESCALATE, improving factual consistency but increasing energy and latency. We choose \(\theta\) via regret minimization on validation streams as described in Method; the resulting operating point achieves robust selective accuracy without exhausting token budgets.  
+
+
+3) Quantization, KV, and Kernels:  
+
+
+a) Weight precision.: INT8 and 4-bit quantization incur small quality drops (macro-F1, BERTScore) relative to FP16 but significantly reduce energy and latency. The tradeoff is dominated by decoder matmuls and memory movement, so kernel improvements like FlashAttention-2 and fused ops amplify gains [11]. These trends align with activation-aware and system co-design quantization literature [4], [10] and post-training schemes [2], [27].  
+
+
+b) KV compression.: ZipCache-like 4-bit and KIVI-like 2-bit KV quantization reduce resident memory and improve p95 latency on long sessions; selective outlier handling avoids major quality regressions [15], [37]. Context streaming further trims prefill cost for large prompts [12]. In ESCALATE, remote prefill dominates; we therefore cap prompt length and exploit retrieval summaries.  
+
+
+c) Paged vs. streaming KV.: Paged KV handles concurrency well, while streaming shines on extended contexts with incremental growth [47], [71]. We prefer paged KV for short answers; for long policy explanations we switch to streaming, improving FTT stability under deep histories.  
+
+
+4) Decoding Accelerators: Enabling Medusa and lookahead speeds up token emission for EDGE-ONLY/EDGE+RAG by reducing the number of committed forward steps per token [40], [53]. Gains are largest when the draft head is well-aligned with local prompts, echoing speculative verification designs  
+
+![](images/1.jpg)
+
+
+<center>Fig. 6: Risk–coverage curves on HL. Lower risk at the same coverage indicates better selective decisions. </center>  
+
+
+[31], [72]. The router accounts for accelerator availability in its cost predictors and tilts toward local generation when accelerators are active.  
+
+
+5) Adapters and Federated Personalization:  
+
+
+a) Local LoRA rank.: LoRA ranks \(\{4,8,16\}\) show diminishing returns; higher ranks marginally improve CE but cost memory and energy. INT4+LoRA yields the best Pareto front for on-edge specialization [20], [74].  
+
+
+b) Federated rounds.: Periodic aggregation across sites improves CE and TS by countering site-specific biases, with modest communication overhead thanks to sparsified codebook updates and LoRA deltas. Catastrophic forgetting is mitigated by elastic penalties and, when needed, block expansion with later pruning, consistent with recent federated fine-tuning strategies [62], [68]. Experience-driven model migration at the edge [5] and hierarchical aggregation [56] are complementary; our results indicate that light-weight adapter exchange is sufficient for the studied scales. Personalized FL frameworks (Ferrari, Peaches) advocate per-client specialization and NAS for heterogeneous clients; we see similar benefits at small memory cost [60], [61]. Our findings also harmonize with federated NAS for sensing encoders [17] and communication-efficient async updates [51], [55].  
+
+
+### D. Visualization and Case Studies  
+
+
+Although we do not display figures here, we summarize qualitative insights tied to Fig. 1 and the metrics.  
+
+
+a) Code-space structure.: t-SNE/UMAP of VQ codes reveals modality-specific axes (RF-attenuation patterns vs. IMU rhythms) that are progressively entangled through fusion. Under CE, new furniture changes shift clusters modestly; after federated rounds, codes realign, consistent with personalization effects noted in Wi-Fi activity and open-set gesture recognition [25], [45]. Ablating Edge-RAG increases the entropy of explanation tokens; adding retrieval tightens the distribution around policy-anchored phrases.  
+
+
+b) Event timelines and retrieval attributions.: Per-room timelines show that EDGE-ONLY dominates for routine episodes, with EDGE+RAG spikes around anomalies (door

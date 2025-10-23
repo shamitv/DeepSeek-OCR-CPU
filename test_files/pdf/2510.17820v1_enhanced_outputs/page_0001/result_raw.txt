@@ -1,0 +1,29 @@
+<|ref|>title<|/ref|><|det|>[[290, 121, 705, 147]]<|/det|>
+# The Standard Model of the Retina  
+
+<|ref|>text<|/ref|><|det|>[[340, 195, 656, 252]]<|/det|>
+Markus Meister  Division of Biology and Biological Engineering  California Institute of Technology  meister@caltech.edu  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 316, 220, 334]]<|/det|>
+## 1 Abstract  
+
+<|ref|>text<|/ref|><|det|>[[115, 355, 882, 456]]<|/det|>
+The scientific study of the retina has reached a remarkable state of completion. We can now explain many aspects of early visual processing based on a relatively simple model of neural circuitry in the retina. The same model, with different parameters, produces a great diversity of neural computations. In this article I lay out what that "standard model" is and how it accounts for such a diversity of phenomena. The emergence of such a powerful standard model is unique in systems neuroscience, and I consider what conditions made it possible. The standard model now serves as a baseline from which to organize future retinal research, either by testing the model's assumptions directly, or by identifying phenomena that remain unexplained.  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 487, 252, 505]]<|/det|>
+## 2 Introduction  
+
+<|ref|>text<|/ref|><|det|>[[115, 526, 882, 599]]<|/det|>
+Recently, I had an unusually interesting experience with peer review. Three reviewers commented on a new report about visual processing in the retina, and independently all three wrote along the lines of: "This is exciting, a new phenomenon of early vision, and definitely worth publishing. On the other hand, everything about it can be explained based on the model we have for how the retina works." Then the three reviewers laid out how that explanation would run, and how it would predict not only the qualitative observations but also some quantitative details in this new study.  
+
+<|ref|>text<|/ref|><|det|>[[115, 602, 882, 700]]<|/det|>
+This episode shows that there exists at least in the minds of many scientists, a standard model of how the retina works. And that this standard model is sufficiently powerful to not only fit the past observations, but also to explain phenomena that haven't even been reported yet. In this article I want to summarize what that standard model is, and how it manages to cover so much of retinal phenomenology. I will explore what were the favorable conditions that allowed the community to come to this state of understanding, compared to other parts of the brain. It is also worth considering which concepts or approaches were not needed to achieve this level of progress. Indeed, this article may be of particular interest to readers whose research focus lies outside the retina.  
+
+<|ref|>text<|/ref|><|det|>[[115, 706, 882, 763]]<|/det|>
+A few caveats are in order: First, I will treat the retina specifically from the point of view of visual processing. The research challenge is to understand what the retina does with visual signals from photoreceptors based on the structure and function of its neural circuit. There are, of course, other reasons to work on the retina, for example, to understand development of the vascular system or problems of neural degeneration. Those are not the subjects of this article.  
+
+<|ref|>text<|/ref|><|det|>[[115, 768, 882, 825]]<|/det|>
+Second, this is not intended as an exhaustive review of primary research but a high- level assessment of where our understanding stands in this field and compared to others. I will illustrate the arguments with examples, and liberally cite reviews of the field by others. A great resource for general function and structure of the retina is the online book WebVision [1]; regarding visual computations in the retina, I recommend the book "Retinal Computation" [2].  
+
+<|ref|>text<|/ref|><|det|>[[115, 830, 882, 887]]<|/det|>
+Finally, I will not claim that everything is understood about the retina, even in this restricted domain. Open questions remain, and I will suggest a few at the end. Nonetheless these research questions are much more sophisticated than those under discussion elsewhere in brain science. As someone once said: "We used to be confused; now we are still confused, but at a much higher level."

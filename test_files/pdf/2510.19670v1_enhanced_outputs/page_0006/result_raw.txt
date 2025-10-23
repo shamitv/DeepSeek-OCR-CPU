@@ -1,0 +1,54 @@
+<|ref|>image<|/ref|><|det|>[[78, 81, 485, 365]]<|/det|>
+<|ref|>image_caption<|/ref|><|det|>[[200, 386, 365, 401]]<|/det|>
+<center>Fig. 1: System overview </center>  
+
+<|ref|>text<|/ref|><|det|>[[79, 430, 489, 520]]<|/det|>
+ensures personalization and robustness under non- IID realities [5], [17], [51], [55], [56], [60]- [69], [75]- [77]. Our work situates itself at their intersection, emphasizing the translation from continuous sensor streams to compact, verifiable semantic tokens and the cost- and uncertainty- aware decisions that govern cloud- edge cooperation.  
+
+<|ref|>sub_title<|/ref|><|det|>[[235, 533, 332, 547]]<|/det|>
+## III. METHOD  
+
+<|ref|>text<|/ref|><|det|>[[79, 555, 489, 812]]<|/det|>
+We present CoSense- LLM, an edge- first framework that converts continuous multimodal sensor streams into compact, verifiable semantic evidence and coordinates with large language models (LLMs) under explicit latency, energy, bandwidth, and privacy constraints. The method comprises four tightly coupled components: (i) SenseFusion, a lightweight multimodal encoder that maps heterogeneous sensor windows to a sequence of semantic tokens; (ii) Edge- RAG, a retrieval layer that grounds language generation in local, site- specific knowledge; (iii) PromptRouter, a cost- and uncertainty- aware policy that chooses among local generation, retrieval- only responses, or cloud escalation; and (iv) Secure Execution, an auditing and redaction path that enforces data- minimization and policy constraints before any cross- boundary transmission. We detail design choices, training objectives, and deployment optimizations so that the method is reproducible on commodity edge devices.  
+
+<|ref|>sub_title<|/ref|><|det|>[[79, 826, 300, 840]]<|/det|>
+### A. Problem Setting and Notation  
+
+<|ref|>text<|/ref|><|det|>[[78, 845, 489, 906]]<|/det|>
+Consider \(M\) sensor modalities (e.g., Wi- Fi CSI, IMU, audio, RFID, lightweight vision) sampled over a sliding window of \(T\) steps. Let \(X_{1:T} = \{x_{1:T}^{(m)}\}_{m = 1}^{M}\) denote the synchronized streams after standard preprocessing (resampling, de- noising,  
+
+<|ref|>text<|/ref|><|det|>[[507, 61, 919, 151]]<|/det|>
+calibration). Our goal is to produce: (a) an event label sequence \(Y\) (possibly empty if abstaining) that describes salient events; and (b) a natural- language explanation \(E\) grounded in local knowledge. The pipeline must meet a service- level objective (SLO) on end- to- end latency \(\tau\) and remain within energy/bandwidth budgets \(B\) while obeying privacy policy \(\mathcal{P}\) .  
+
+<|ref|>text<|/ref|><|det|>[[507, 152, 919, 227]]<|/det|>
+We write \(\phi_{m}(\cdot)\) for modality encoders, \(\Phi (\cdot)\) for cross- modal fusion, \(\mathcal{Q}(\cdot)\) for semantic tokenization, \(\mathcal{R}(\cdot)\) for retrieval, \(\pi (\cdot)\) for the routing policy, and \(\mathcal{L}\) for the language model (local or cloud). Throughout, vectors are row- major, \(\| \cdot \|\) is \(L_{2}\) , and \(\langle \cdot ,\cdot \rangle\) is an inner product.  
+
+<|ref|>sub_title<|/ref|><|det|>[[507, 243, 836, 258]]<|/det|>
+### B. SenseFusion: Multimodal Signal-to-Semantics  
+
+<|ref|>text<|/ref|><|det|>[[507, 264, 919, 385]]<|/det|>
+a) Modality adapters.: Each adapter \(\phi_{m}\) transforms raw windows to temporally aligned embeddings. For instance, CSI is converted to a time-frequency representation via short-time Fourier transforms on selected subcarriers; IMU uses 1D convolutional front-ends; audio adopts mel-spectrogram encoders. The outputs are projected to a shared \(d\) -dimensional space and concatenated along time after simple resampling, yielding \(\tilde{H} \in \mathbb{R}^{T \times (Md)}\) .  
+
+<|ref|>text<|/ref|><|det|>[[507, 386, 919, 477]]<|/det|>
+b) Cross-modal fusion.: We adopt a lightweight transformer with cross-attention and squeeze-excitation gating, mapping \(\tilde{H}\) to \(H \in \mathbb{R}^{L \times d}\) , where \(L \ll T\) are latent frames. To align \(H\) with language, we learn a joint space with textual descriptors \(T_{\mathrm{text}}\) distilled from curated prompts describing expected events, policies, and site context.  
+
+<|ref|>equation<|/ref|><|det|>[[568, 488, 917, 533]]<|/det|>
+\[\mathcal{L}_{\mathrm{align}} = -\frac{1}{B}\sum_{i = 1}^{B}\log \frac{\exp(\langle h_i,t_i\rangle / \tau)}{\sum_{j = 1}^{B}\exp(\langle h_i,t_j\rangle / \tau)} \quad (1)\]  
+
+<|ref|>text<|/ref|><|det|>[[507, 541, 919, 572]]<|/det|>
+Symbols: \(B\) is batch size; \(h_i \in \mathbb{R}^d\) a pooled fusion vector from \(H\) ; \(t_i \in \mathbb{R}^d\) a text embedding; \(\tau > 0\) temperature; \(\langle \cdot , \cdot \rangle\) inner product.  
+
+<|ref|>text<|/ref|><|det|>[[507, 573, 919, 663]]<|/det|>
+The alignment couples with an event proxy task (e.g., gesture or respiration state classification on labeled subsets) to stabilize representations under interference and subject drift. We use focal/CB loss variants for class imbalance, but alignment (Eq. 1) is the primary term tying sensor semantics to language.  
+
+<|ref|>text<|/ref|><|det|>[[507, 664, 919, 755]]<|/det|>
+c) Discrete semantic tokens.: To reduce bandwidth and create a stable interface to the LLM, we map \(H\) to a short code sequence \(Z = \{z_k\}_{k = 1}^K\) , \(z_k \in \{1, \ldots , V\}\) , via vector-quantized bottlenecks (VQ) with a learned codebook \(C \in \mathbb{R}^{V \times d}\) . Let \(u_k \in \mathbb{R}^d\) be the pre-quant embeddings; the VQ objective includes commitment and codebook updates:  
+
+<|ref|>equation<|/ref|><|det|>[[548, 761, 917, 806]]<|/det|>
+\[\mathcal{L}_{\mathrm{VQ}} = \sum_{k = 1}^{K}\left\| \mathrm{sg}[u_k] - c_{z_k}\right\| _2^2 +\beta \left\| u_k - \mathrm{sg}[c_{z_k}]\right\| _2^2 \quad (2)\]  
+
+<|ref|>text<|/ref|><|det|>[[506, 815, 919, 845]]<|/det|>
+Symbols: \(c_{z_k}\) is the selected code vector; \(\mathrm{sg}[\cdot ]\) stops gradients; \(\beta\) is commitment weight; \(K\) tokens per window; \(V\) codebook size.  
+
+<|ref|>text<|/ref|><|det|>[[507, 845, 919, 905]]<|/det|>
+The code sequence \(Z\) is then serialized with minimal metadata (timestamp, modality presence, confidence) into a compact prompt sketch that the router may forward to the local LLM or enrich via Edge- RAG.

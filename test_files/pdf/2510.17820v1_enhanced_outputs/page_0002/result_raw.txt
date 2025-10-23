@@ -1,0 +1,18 @@
+<|ref|>sub_title<|/ref|><|det|>[[115, 88, 220, 105]]<|/det|>
+## 3 Premises  
+
+<|ref|>text<|/ref|><|det|>[[115, 150, 883, 207]]<|/det|>
+In college, I learned quantum mechanics from a book that took a fully axiomatic approach [3]: The text laid out the five postulates of quantum mechanics, and then proceeded to derive all the observable phenomenology from those axioms. While this may be the ideal final state of a mature science, we have not quite reached it in neurobiology. Nevertheless, here are a few postulates that underlie research on the retina and form the basis of the standard model:  
+
+<|ref|>text<|/ref|><|det|>[[115, 213, 882, 284]]<|/det|>
+1. The purpose of the retina is to make light visible. It acts as the interface that converts the physical stimulus - photons from different directions in space - into the universal neural language, namely action potentials. So the goal of the standard model should be to explain and predict the output of the retina - the firing of retinal ganglion cells - as a function of the input - the light patterns on the photoreceptors. If we can accomplish that, then we have captured the contribution that the retina makes to human vision.  
+
+<|ref|>text<|/ref|><|det|>[[115, 289, 882, 333]]<|/det|>
+2. There are about 40 types of retinal ganglion cells. Each of these types is the output of a circuit that leads all way from the photoreceptors to the retinal ganglion cell. Different types of retinal ganglion cell are distinct by the details of that circuit. Each circuit will correspond to a set of parameters of the standard model.  
+
+<|ref|>text<|/ref|><|det|>[[115, 338, 882, 381]]<|/det|>
+3. In different vertebrate species, the retina follows the same principles, but with different circuit parameters. Different species have undergone different types of selection for these parameters as a result of evolutionary pressure and ecological niches [4].  
+
+<|ref|>image<|/ref|><|det|>[[213, 442, 784, 744]]<|/det|>
+<|ref|>image_caption<|/ref|><|det|>[[115, 753, 883, 907]]<|/det|>
+<center>Figure 1: Retinal circuitry at different levels of abstraction. (A) A vertical section of chicken retina stained with fluorescent labels, revealing the layered structure: outer nuclear layer (ONL) with photoreceptor cells (PRs); outer plexiform layer (OPL) with synapses between PRs, horizontal cells (HCs), and bipolar cells (BCs); inner nuclear layer housing HCs, BCs, and amacrine cells (ACs); inner plexiform layer with synapses between BCs, ACs, and ganglion cells (GCs); ganglion cell layer (GCL) housing the GCs. Photo credit: Andy Fisher [5]. (B) The five classes of retinal neurons, illustrating the range of shapes (schematized) within each class. From [6]. (C) Synaptic connections among the five cell classes. Closed vs open circles: sign-preserving vs sign-inverting synapses. Zig-zag symbol: electrical synapses. (D) Schematic representation of the standard model (Eqns 2 and 4). The light stimulus \(S(\vec{x},t)\) gets distributed into many parallel bipolar cell channels \(B(\vec{x},t)\) , whose outputs get pooled into the ganglion cell response \(G(\vec{x},t)\) . Right hand side includes explicit amacrine cell signals (Eqn 4). Inset defines each element as a cascade of a linear spatiotemporal filter \(K(\vec{x},t)\) and a nonlinearity \(N()\) . </center>

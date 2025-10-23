@@ -1,0 +1,77 @@
+<|ref|>sub_title<|/ref|><|det|>[[78, 62, 411, 77]]<|/det|>
+### C. Edge-RAG: Local Grounding and Consistency  
+
+<|ref|>text<|/ref|><|det|>[[78, 82, 489, 203]]<|/det|>
+a) Local corpora and indices.: Each edge node maintains a private corpus: site policies (e.g., fall-response SOPs), device manuals, location maps, and short textual notes distilled from prior cases. We build a hybrid index combining a vector store (for dense semantic search) and a lightweight inverted index (for keyword/BM25). The query \(q\) is formed from \((Z\) a small set of salient \(h\) 's, and structured fields like room ID and last seen user).  
+
+<|ref|>text<|/ref|><|det|>[[77, 204, 488, 264]]<|/det|>
+b) Hybrid retrieval score and cross-piece consistency.: The final ranking score blends dense similarity, sparse matching, and a consistency prior that penalizes mutually contradictory snippets:  
+
+<|ref|>equation<|/ref|><|det|>[[77, 271, 488, 290]]<|/det|>
+\[s(d\mid q) = \lambda \cdot \cos \big(f(q),f(d)\big) + (1 - \lambda)\cdot \mathrm{BM25}(q,d) + \kappa \cdot \Gamma (d\mid C) \quad (3)\]  
+
+<|ref|>text<|/ref|><|det|>[[77, 304, 488, 349]]<|/det|>
+Symbols: \(f(\cdot)\) is an embedding function; \(\cos (\cdot ,\cdot)\) cosine similarity; BM25 sparse score; \(\Gamma\) consistency with current candidate set \(C\) . \(\lambda ,\kappa \in [0,1]\)  
+
+<|ref|>text<|/ref|><|det|>[[77, 350, 488, 440]]<|/det|>
+We operationalize \(\Gamma\) via pairwise entailment scores between candidate snippets (obtained from a tiny on- edge NLI head) and prefer sets that are jointly consistent. The top- \(k\) snippets ( \(k\leq 5\) on memory- constrained devices) are slotted into a structured prompt with fields [Setting], [Entities], [Evidence], and [Policy].  
+
+<|ref|>sub_title<|/ref|><|det|>[[77, 452, 488, 467]]<|/det|>
+### D. PromptRouter: Uncertainty- and Cost-Aware Cooperation  
+
+<|ref|>text<|/ref|><|det|>[[77, 473, 488, 578]]<|/det|>
+a) Uncertainty estimates.: To avoid hallucinated explanations and wasted escalations, we compute an uncertainty score \(u\) that aggregates both sensory and language-side proxies. On the sensory side, we use MC-dropout on the classification head; on the language side, we use predictive entropy over candidate rationales from a tiny draft head. A single scalar \(u\) is obtained by min-max normalization and convex combination:  
+
+<|ref|>equation<|/ref|><|det|>[[130, 584, 487, 603]]<|/det|>
+\[u = \eta \cdot \mathsf{H}\big(\hat{y}\mid X_{1:T}\big) + (1 - \eta)\cdot \mathsf{H}\big(\hat{e}\mid Z,\mathcal{D}\big) \quad (4)\]  
+
+<|ref|>text<|/ref|><|det|>[[76, 612, 488, 657]]<|/det|>
+Symbols: \(\mathsf{H}(\cdot)\) Shannon entropy; \(\hat{y}\) class posteriors from SenseFusion; \(\hat{e}\) rationale/summary posteriors from a small draft generator; \(\eta \in\) [0, 1] mixing weight; \(\mathcal{D}\) retrieved docs.  
+
+<|ref|>text<|/ref|><|det|>[[76, 658, 488, 718]]<|/det|>
+b) Explicit cost model.: We estimate a per-decision cost \(C\) that reflects end-to-end latency, energy, token budget (for cloud billing and time), and a conservative privacy risk proxy (share of raw vs. semantic data):  
+
+<|ref|>equation<|/ref|><|det|>[[129, 725, 487, 745]]<|/det|>
+\[C = \alpha \cdot \hat{\mathsf{lat}} +\beta \cdot \mathsf{energy} + \gamma \cdot \mathsf{tokens} + \delta \cdot \mathsf{risk} \quad (5)\]  
+
+<|ref|>text<|/ref|><|det|>[[76, 754, 488, 799]]<|/det|>
+Symbols: \(\hat{\mathsf{lat}}\) predicted latency; \(\mathsf{energy}\) estimated energy per decision; tokens expected prompt+generation tokens; risk privacy risk score; \(\alpha ,\beta ,\gamma ,\delta \geq 0\)  
+
+<|ref|>text<|/ref|><|det|>[[77, 801, 488, 905]]<|/det|>
+We maintain parametric predictors for latency/energy using online regression with features (model quantization level, batch occupancy, code length \(K\) , retrieved \(k\) , link bandwidth). Risk is a rule- based score that rises when any raw waveform is requested (normally disabled) or when named entities/personal data might cross boundaries; in our default profile only \(Z\) and redacted metadata are ever transmitted.  
+
+<|ref|>text<|/ref|><|det|>[[507, 62, 919, 151]]<|/det|>
+c) Policy.: The router chooses among three actions: EDGE-ONLY (generate locally with the tiny LLM), EDGE+RAG (retrieve then generate locally), and ESCALATE (send a compact prompt to the cloud LLM). We minimize a one-step risk that trades task loss \(\mathbb{E}[\ell ]\) , cost \(C\) , and uncertainty \(u\) :  
+
+<|ref|>sub_title<|/ref|><|det|>[[508, 161, 771, 175]]<|/det|>
+### E. Prompt Construction and Redaction  
+
+<|ref|>text<|/ref|><|det|>[[508, 180, 919, 333]]<|/det|>
+The prompt template is structured to be deterministic and cache- friendly. The header captures Context (site ID, time window, device health), then a Semantics block with the code sequence \(Z\) and salient latent tokens (few \(h\) 's with PCA compression), then Evidence (retrieved snippets \(\mathcal{D}\) ), and finally Task (explain/advise/abstain). Redaction removes personal names, exact coordinates, or raw waveform hashes. If the risk rule flags a potential leak (e.g., an excerpt contains a personal identifier not whitelisted), the router degrades to abstracted evidence (e.g., "Resident A in Room 12").  
+
+<|ref|>sub_title<|/ref|><|det|>[[508, 344, 771, 358]]<|/det|>
+### F. Training Objectives and Curriculum  
+
+<|ref|>text<|/ref|><|det|>[[507, 363, 919, 423]]<|/det|>
+a) Stage I: Self-supervised modality pretraining.: Each \(\phi_{m}\) is trained on large unlabeled windows with masked prediction and temporal contrast, e.g., TS-TCC-style tasks. We freeze stem layers to stabilize later alignment.  
+
+<|ref|>text<|/ref|><|det|>[[507, 423, 919, 499]]<|/det|>
+b) Stage II: Cross-modal alignment and VQ code learning.: We jointly optimize \(\mathcal{L}_{\mathrm{align}}\) (Eq. 1) and \(\mathcal{L}_{\mathrm{VQ}}\) (Eq. 2) with a small supervised head where labels exist (gestures, respiration phases). VQ codebooks are initialized by \(k\) -means on pooled \(u_{k}\) to avoid code collapse; EMA updates stabilize code vectors.  
+
+<|ref|>text<|/ref|><|det|>[[507, 500, 919, 590]]<|/det|>
+c) Stage III: Instruction tuning for explanation.: A compact on-edge LLM (e.g., 1.8-3B params, 4/8-bit) is tuned with structured inputs \((Z,\mathcal{D})\mapsto E\) using instruction-style pairs synthesized from policies and curated exemplars. We also train a micro "draft" head to output short rationales for uncertainty estimation. For cloud LLMs, we only tune prompt formats.  
+
+<|ref|>text<|/ref|><|det|>[[507, 590, 919, 696]]<|/det|>
+d) Stage IV: Router calibration.: We calibrate predictive latency/energy models by sweeping quantization levels, concurrent sessions, and link bandwidths on the target hardware. The task-loss proxy \(\mathbb{E}[\ell \mid a]\) is fitted from validation rollouts that pair \((u,C)\) with achieved F1 and explanation quality scores (BERTScore and human ratings). Thresholds \((\theta_{a})\) are chosen by minimizing expected regret on a held-out day.  
+
+<|ref|>sub_title<|/ref|><|det|>[[507, 705, 835, 720]]<|/det|>
+### G. Online Personalization (Edge and Federated)  
+
+<|ref|>text<|/ref|><|det|>[[507, 725, 919, 769]]<|/det|>
+Site- specific drift (furniture moves, channel changes, seasonal patterns) and user- specific behavior motivate continual adaptation. We expose two knobs:  
+
+<|ref|>text<|/ref|><|det|>[[507, 771, 919, 860]]<|/det|>
+(i) Local refinement. A tiny adapter (LoRA with rank 4-16) sits in each \(\phi_{m}\) and in the cross-modal attention. We periodically fine-tune adapters on pseudo-labeled windows (high-confidence predictions) with a replay buffer and entropy regularization to avoid drift. Quantized fine-tuning (int8/4- weight) keeps memory within edge constraints.  
+
+<|ref|>text<|/ref|><|det|>[[507, 862, 919, 906]]<|/det|>
+(ii) Federated rounds. When allowed, we join periodic FL rounds that aggregate adapter deltas and codebook nudges across sites. Communication is stratified: codebook updates

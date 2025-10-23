@@ -1,0 +1,35 @@
+
+### J. Security, Privacy, and Trust Implications for Edge-Located LLMs  
+
+
+Edge pipelines are often chosen not only for latency but to reduce attack surfaces. Physical- layer fingerprint- based authentication in Wi- Fi can be subverted; PhyFinAtt shows undetectable attacks on PHY- layer fingerprinting, implying that naive trust in link- layer provenance is risky [42]. Acoustic side channels remind us that even seemingly benign sensors can leak sensitive inputs; KeystrokeSniffer demonstrates smartphone- based eavesdropping across rooms [38]. Together these results strengthen the case for processing locally, minimizing raw data retention, and tightening the chain of custody for prompts, traces, and caches. In our setting, such considerations justify placing multimodal encoders at the edge and sending only compact semantics or encrypted signatures upstream. They also justify careful cache policies and adapter isolation when many tenants share an edge box, as seen in multi- adapter serving [3], [52] and disaggregated backends [16].  
+
+
+### K. Programming Abstractions and Execution Frameworks  
+
+
+Bridging the gap from algorithms to deployed systems, SGLang treats LLM workflows as structured programs and optimizes their execution, a good fit for edge cases where control flow matters (e.g., capture \(\rightarrow\) detect \(\rightarrow\) retrieve \(\rightarrow\) explain) [1]. In tandem with kernel and cache advances [11], [15], [24], [47], these programming abstractions suggest that future edge stacks will compile language- centric pipelines down to heterogeneous runtimes that blend CPU, GPU, NPU, and storage primitives.  
+
+
+### L. How Our Work Differs  
+
+
+Our approach targets the joint problem of semantics- at- the- edge and resource- aware cooperation. Prior partitioned serving and offloading decide where to execute transformer blocks [14], [22], [28], [35], [43], [70], but they typically assume textual inputs and ignore upstream sensing volatility. Long- context and cache works [7], [12], [15], [24], [37], [41], [47], [71] optimize token state, not semantic evidence formation from multimodal flows. Acceleration via speculative decoding or kernel design [6], [11], [31], [36], [40], [44], [53], [72] shortens model inner loops, but does not answer when an edge should abstain, retrieve, or escalate. RAG at the edge [18], [33], [78] brings knowledge close, yet most pipelines retrieve from textual corpora rather than fuse and rationalize continuous sensor traces. Multimodal bridges [39], [57] push perception into language, but rarely under tight edge budgets or with federated personalization against non- IID distributions [17], [60], [61], [75], [76]. Lastly, the sensing literature [9], [13], [21], [25], [29], [32], [34], [45], [48] is rich on robust feature engineering and model design, yet stops short of end- to- end language explanations with verifiable semantics and explicit cost- uncertainty routing.  
+
+
+Our system therefore composes three threads: (1) an edge- side multimodal semantic encoder trained and adapted with federated and semi- supervised methods [51], [55], [60], [61], [75], [77]; (2) a cost- and uncertainty- aware cooperation policy situated within disaggregated, serverless- capable serving stacks [8], [16], [23], [54]; and (3) edge RAG and knowledge caching tuned for continuous signals [18], [33], [78], harnessing compression and adapter serving for personalization at scale [2]- [4], [10], [20], [52], [74]. Along the way, we exploit KV and kernel optimizations [6], [11], [15], [24], [47] and decoding accelerators [31], [36], [40], [53], [72], [73] to meet real- time requirements on commodity edge accelerators. We also explicitly account for attack and leakage vectors illuminated by recent security studies [38], [42].   
+
+
+### M. Positioning Within Practical Edge Deployments  
+
+
+Finally, we reflect on deployment settings where the above themes intersect. In a hospital ward or eldercare environment, respiratory monitoring and motion assessment should avoid video to minimize privacy risk; RF- based alternatives must resist interference and deliver interpretable outcomes [9], [13], [32]. The edge node must therefore (i) convert noisy RF time- frequency patterns into semantic tokens locally; (ii) query local RAG stores for device- and policy- specific knowledge; (iii) route to cloud only when uncertainty or policy requires escalation. Long- context cache techniques avoid thrashing when multiple rooms stream events [12], [47]; speculative decoding and accelerated kernels bound latency spikes during escalations [11], [40]. Federated updates personalize encoders to local multipath, while adapter serving swaps patient- or ward- specific heads without retraining the backbone [3], [60], [74]. In enterprise settings with RFID access or handwriting verification, similar patterns apply, with RF- based identification or writing recognition supplying the semantic substrate [48]. In either case, physical- layer attack and side- channel findings argue for local processing, auditable logs, and strict cache isolation [38], [42].  
+
+
+Across these vignettes, prior work provides strong but fragmented building blocks. Our contribution is to assemble them into a coherent, edge- first pipeline that prioritizes semantics, privacy, and predictable latency, while remaining compatible with evolving serving kernels and memory managers. The combination is, we argue, the right fit for multimodal, interference- prone environments where text- only assumptions do not hold and where cloud access is a privilege rather than a default.  
+
+
+### N. Summary  
+
+
+In summary, collaborative serving [22], [26], [43], [49], [70], KV state management [7], [12], [15], [24], [37], [41], [46], [71], disaggregation and serverless backends [8], [16], [23], [50], [54], kernel and decoding accelerations [6], [11], [31], [36], [40], [44], [52], [73], [73], compression and adapter serving [2]- [4], [10], [19], [20], [27], [52], [58], [74], and edge RAG [18], [33], [78] together form a toolbox from which an edge- first LLM pipeline can be built. Multimodal sensing works in Wi- Fi, RFID, and affective computing [9], [13], [21], [25], [29], [32], [44], [45], [48] anchor the need for such pipelines, while federated and decentralized optimization

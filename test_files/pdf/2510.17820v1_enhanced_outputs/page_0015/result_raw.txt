@@ -1,0 +1,44 @@
+<|ref|>text<|/ref|><|det|>[[121, 90, 884, 147]]<|/det|>
+[84] Chong, E., Moroni, M., Wilson, C., Shoham, S., Panzeri, S., and Rinberg, D. Manipulating synthetic optogenetic odors reveals the coding logic of olfactory perception. Science (New York, N.Y.), 368(6497):eaba2357, June 2020. ISSN 0036- 8075. doi: 10.1126/science.aba2357. URL https://pmc.ncbi.nlm.nih.gov/articles/PMC8237706/.  
+
+<|ref|>text<|/ref|><|det|>[[121, 156, 884, 212]]<|/det|>
+[85] Engel, A. K., König, P., Kreiter, A. K., and Singer, W. Interhemispheric Synchronization of Oscillatory Neuronal Responses in Cat Visual Cortex. Science, 252(5009):1177- 1179, May 1991. doi: 10.1126/science.252.5009.1177. URL https://www.science.org/doi/10.1126/science.252.5009.1177. Publisher: American Association for the Advancement of Science.  
+
+<|ref|>text<|/ref|><|det|>[[121, 223, 884, 265]]<|/det|>
+[86] Neuenschwander, S. and Singer, W. Long- range synchronization of oscillatory light responses in the cat retina and lateral geniculate nucleus. Nature, 379(6567):728- 732, February 1996. ISSN 0028- 0836. doi: 10.1038/379728a0.  
+
+<|ref|>text<|/ref|><|det|>[[121, 275, 884, 346]]<|/det|>
+[87] Neuenschwander, S., Rosso, G., Branco, N., Freitag, F., Tehovnik, E. J., Schmidt, K. E., and Baron, J. On the Functional Role of Gamma Synchronization in the Retinogeniculate System of the Cat. Journal of Neuroscience, 43(28):5204- 5220, July 2023. ISSN 0270- 6474, 1529- 2401. doi: 10.1523/JNEUROSCI.1550- 22.2023. URL https://www.jneurosci.org/content/43/28/5204. Publisher: Society for Neuroscience Section: Research Articles.  
+
+<|ref|>text<|/ref|><|det|>[[121, 355, 884, 398]]<|/det|>
+[88] Martin, P. R. Colour processing in the primate retina: recent progress. The Journal of Physiology, 513 (Pt 3):631- 638, December 1998. ISSN 0022- 3751. doi: 10.1111/j.1469- 7793.1998.631ba.x. URL https://pmc.ncbi.nlm.nih.gov/articles/PMC2231327/.  
+
+<|ref|>text<|/ref|><|det|>[[120, 408, 884, 437]]<|/det|>
+[89] Joesch, M. and Meister, M. A neuronal circuit for colour vision based on rod- cone opponency. Nature, 532: 236- 9, April 2016. doi: 10.1038/nature17158.  
+
+<|ref|>text<|/ref|><|det|>[[121, 447, 884, 490]]<|/det|>
+[90] Oesch, N. W., Wade Kothmann, W., and Diamond, J. S. Illuminating synapses and circuitry in the retina. Current Opinion in Neurobiology, 21(2):238- 244, April 2011. ISSN 0959- 4388. doi: 10.1016/j.conb.2011.01.008. URL https://www.sciencedirect.com/science/article/pii/S0959438811000237.  
+
+<|ref|>text<|/ref|><|det|>[[120, 499, 884, 528]]<|/det|>
+[91] London, M. and Hausser, M. Dendritic computation. Annu Rev Neurosci, 28:503- 32, 2005. ISSN 0147- 006X. doi: 10.1146/annurev.neuro.28.061604.135703.  
+
+<|ref|>text<|/ref|><|det|>[[121, 538, 884, 595]]<|/det|>
+[92] Hartveit, E., Veruki, M. L., and Zandt, B.- J. Dendritic Morphology of an Inhibitory Retinal Interneuron Enables Simultaneous Local and Global Synaptic Integration. Journal of Neuroscience, 42(9):1630- 1647, March 2022. ISSN 0270- 6474, 1529- 2401. doi 10.1523/JNEUROSCI.0695- 21.2021. URL https://www.jneurosci.org/content/42/9/1630. Publisher: Society for Neuroscience Section: Research Articles.  
+
+<|ref|>text<|/ref|><|det|>[[120, 605, 884, 634]]<|/det|>
+[93] Cunningham, J. P. and Yu, B. M. Dimensionality reduction for large- scale neural recordings. Nature Neuroscience, 17(11):1500- 1509, November 2014. ISSN 1546- 1726. doi: 10.1038/nn.3776.  
+
+<|ref|>text<|/ref|><|det|>[[120, 644, 884, 673]]<|/det|>
+[94] Barlow, H. B. Possible principles underlying the transformations of sensory messages. In Rosenblith, W. A., editor, Sensory Communication, pages 217- 234. MIT Press, Cambridge, MA, 1961.  
+
+<|ref|>text<|/ref|><|det|>[[120, 683, 884, 725]]<|/det|>
+[95] Simoncelli, E. P. Vision and the statistics of the visual environment. Current Opinion in Neurobiology, 13 (2):144- 149, April 2003. ISSN 0959- 4388. doi: 10.1016/S0959- 4388(03)00047- 3. URL https://www.sciencedirect.com/science/article/pii/S0959438803000473.  
+
+<|ref|>text<|/ref|><|det|>[[120, 735, 884, 777]]<|/det|>
+[96] Manookin, M. B. and Rieke, F. Two Sides of the Same Coin: Efficient and Predictive Neural Coding. Annual Review of Vision Science, 9:293- 311, September 2023. ISSN 2374- 4650. doi: 10.1146/annurev- vision- 112122- 020941.  
+
+<|ref|>text<|/ref|><|det|>[[120, 787, 884, 830]]<|/det|>
+[97] Zheng, J. and Meister, M. The unbearable slowness of being: Why do we live at 10 bits/s? Neuron, 113(2): 192- 204, January 2025. ISSN 0896- 6273. doi: 10.1016/j.neuron.2024.11.008. URL https://www.cell.com/neuron/abstract/S0896- 6273(24)00808- 0. Publisher: Elsevier.  
+
+<|ref|>text<|/ref|><|det|>[[120, 840, 884, 910]]<|/det|>
+[98] Yonehara, K., Ishikane, H., Sakuta, H., Shintani, T., Nakamura- Yonehara, K., Kamiji, N. L., Usui, S., and Noda, M. Identification of retinal ganglion cells and their projections involved in central transmission of information about upward and downward image motion. PLoS ONE, 4(1):e4320, 2009. ISSN 1932- 6203. doi: 10.1371/journal.pone.0004320. URL http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0004320.

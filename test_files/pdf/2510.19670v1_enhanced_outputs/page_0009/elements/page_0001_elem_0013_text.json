@@ -1,0 +1,39 @@
+{
+  "element_id": "page_0001_elem_0013",
+  "type": "text",
+  "page": 1,
+  "index": 13,
+  "bounding_boxes": [
+    {
+      "x1": 864,
+      "y1": 1259,
+      "x2": 1562,
+      "y2": 1763
+    }
+  ],
+  "bounding_boxes_normalized": [
+    {
+      "x1": 0.508235294117647,
+      "y1": 0.5722727272727273,
+      "x2": 0.9188235294117647,
+      "y2": 0.8013636363636364
+    }
+  ],
+  "metrics": {
+    "num_boxes": 1,
+    "total_area": 351792,
+    "width": 698,
+    "height": 504,
+    "aspect_ratio": 1.3849206349206349
+  },
+  "image_dimensions": {
+    "width": 1700,
+    "height": 2200
+  },
+  "cropped_image": {
+    "filename": "page_0001_elem_0013_text.jpg",
+    "width": 698,
+    "height": 504,
+    "padding": 0
+  }
+}

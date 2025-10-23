@@ -1,0 +1,62 @@
+
+only within a \(50\mathrm{ms}\) window to reflect real- time constraints. All methods face the same arrival sequence per fold.  
+
+
+c) Token budgets and stopping.: On edge, we cap output at 200 tokens; on cloud at 350. Early stopping on the local LLM uses a sentence-level entropy threshold; baselines receive the same caps. We disable nucleus/temperature differences across methods unless explicitly evaluating decoding variants, to isolate system effects.  
+
+
+d) Power and network accounting.: The power meter samples at \(\geq 5\mathrm{Hz}\) ; we synchronize logs by timestamp alignment with the edge node. We include AP and sensor power in the baseline but subtract sensor-only idle to isolate compute changes. WAN traffic is captured via tcpdump filters to the cloud endpoints; byte counts include TCP/IP overhead.  
+
+
+e) Trials and statistical testing.: All metrics are computed per-day and averaged across folds. We present \(95\%\) confidence intervals from 1,000 bootstrap resamples over episodes. For key comparisons (e.g., Edge+RAG vs. Cloud-only), we provide paired Wilcoxon signed-rank tests at \(\alpha = 0.05\) . Where multiple hypotheses are tested, we apply Benjamin-Hochberg correction.  
+
+
+### G. Ablation and Sensitivity Studies  
+
+
+We design ablations to directly test the claims in Method. a) Effect of Edge- RAG.: We remove retrieval, then add back dense- only, sparse- only, and hybrid retrieval; we report factual consistency, contradiction rate, and latency deltas. We also vary the number of retrieved snippets \(k\in \{0,1,3,5\}\) to reveal diminishing returns.  
+
+
+b) Uncertainty gating.: We sweep the mixing weight \(\eta\) in Eq. (4) from 0 to 1, and the thresholds \(\theta\) -edge and \(\theta\) -esc. We examine AURC, SLA hit rate, and escalation rate as functions of these parameters. We also test a calibrated vs. uncalibrated uncertainty to quantify the value of temperature scaling.  
+
+
+c) Quantization and KV policies.: We vary LLM weight precision (FP16/INT8/4-bit) and KV schemes (full-precision, 4-bit ZipCache-like, 2-bit asymmetric as in KIVI) [15], [37]. We measure quality drop (task F1 and BERTScore) and latency/energy savings. Streaming KV is compared with paged KV under long-context sessions [12], [47].  
+
+
+d) Decoding accelerators.: We enable/disable Medusastyle multi-head drafts and lookahead to quantify gains on edge GPUs [40], [53]. Because speculative methods alter token curves, we hold temperature and top-\(p\) fixed and compare FTT and TTCR distributions.  
+
+
+e) Adapters and federated updates.: We sweep LoRA ranks \(\{4,8,16\}\) and update intervals (local-only vs. federated rounds every \(12\mathrm{h}\) ). We report personalization gains on CS and CE protocols and the communication volume per round. For federated experiments, we clip update norms and measure catastrophic forgetting via performance on early-day episodes after several rounds.  
+
+
+### H. Ethics, Privacy, and Compliance  
+
+
+Our capture and processing flow is designed to minimize privacy exposure: (i) only discrete codes and sanitized metadata can leave the device; (ii) PII redaction is applied before  
+
+
+any escalation; (iii) logs contain only IDs and hash digests. We enforce retention policies: raw sensor buffers are overwritten after \(12\mathrm{h}\) and never stored to persistent media unless explicitly authorized for debugging; even then, they remain encrypted at rest and are purged after \(72\mathrm{h}\) . Safety guards block unsafe suggestions and flag human- in- the- loop escalations. We intentionally include adversarial probes inspired by PHY fingerprint evasion and acoustic leakage to test resilience [38], [42].  
+
+
+### I. Limitations of the Setup  
+
+
+While multi- day captures and mixed environments are realistic, the sites are still moderate in scale; very large campuses may expose additional scheduling and index- partitioning issues. Our annotation coverage for rare events (e.g., true falls) is necessarily small; we therefore treat these with an abstention- first policy rather than accuracy claims. Cloud models are treated as black boxes; specific model differences may alter absolute numbers, though system trends (local grounding vs. remote- only) are robust.  
+
+
+### J. Reproducibility Artifacts  
+
+
+To support independent reproduction, we will provide: configuration files for indices (HNSW/BM25), router thresholds and regression coefficients, anonymized prompts for instruction tuning, and scripts for power/network logging. Kernel and KV settings mirror public implementations of tiled attention and paging [11], [47]. While the raw private datasets cannot be released, we share a synthetic generator that mimics marginal statistics (code lengths, \(u\) distributions, arrival processes) so that ablation trends can be validated independently. We also share detailed environment manifests: sensor placements, MAC address redactions, and link profiles used during each day.  
+
+
+### K. What Constitutes a Win?  
+
+
+A method is considered superior if it simultaneously: (i) achieves higher macro- F1 and lower contradiction rate than the strongest edge classifier+templates baseline; (ii) improves factual consistency and readability over Edge LLM without retrieval; (iii) meets the \(750\mathrm{ms}\) p95 latency SLO with at least a \(20\%\) lower energy- per- decision than the partitioned baseline in the Moderate link profile; and (iv) reduces token cost (prompt+generation) by at least \(40\%\) compared to Cloud- only LLM at equal explanation quality. We also require robustness under CE and TS protocols: the degradation from CS to CE must be less than \(10\%\) relative on macro- F1 to count as robust.  
+
+
+### L. Discussion of Metric Interactions  
+
+
+Latency and explanation quality trade off through retrieval depth and decoding strategies; selective risk and abstention complicate headline accuracy. We therefore always present coverage- normalized accuracy alongside raw F1, and we stratify latency by action (EDGE- ONLY, EDGE+RAG, ESCALATE). To contextualize energy, we report \(J / 100\) tokens and \(J\) per decision because token length varies with action. Privacy proxies are imperfect but useful as regression targets

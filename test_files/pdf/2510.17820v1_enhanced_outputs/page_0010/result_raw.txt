@@ -1,0 +1,56 @@
+<|ref|>sub_title<|/ref|><|det|>[[115, 89, 189, 107]]<|/det|>
+## Funding  
+
+<|ref|>text<|/ref|><|det|>[[115, 118, 884, 135]]<|/det|>
+MM was supported by grants from the Simons Collaboration on the Global Brain (543015) and NIH (R01 NS111477).  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 152, 314, 170]]<|/det|>
+## Declaration of Interests  
+
+<|ref|>text<|/ref|><|det|>[[115, 183, 400, 198]]<|/det|>
+The author declares no competing interests.  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 216, 208, 233]]<|/det|>
+## References  
+
+<|ref|>text<|/ref|><|det|>[[124, 245, 886, 280]]<|/det|>
+[1] Kolb, H., Nelson, R., Fernandez, E., and Jones, editors. Webvision - The Organization of the Retina and Visual System. URL https://www.webvision.pitt.edu/.  
+
+<|ref|>text<|/ref|><|det|>[[125, 283, 884, 312]]<|/det|>
+[2] Schwartz, G. Retinal Computation. Academic Press, London, 1st edition edition, August 2021. ISBN 978- 0- 12- 819896- 4.  
+
+<|ref|>text<|/ref|><|det|>[[128, 318, 884, 348]]<|/det|>
+[3] Cohen- Tannoudji, C., Diu, B., and Laloe, F. Quantum mechanics; 1st ed. Wiley, New York, NY, 1977. URL https://cds.cern.ch/record/101367.  
+
+<|ref|>text<|/ref|><|det|>[[130, 353, 884, 410]]<|/det|>
+[4] Hahn, J., Monavarfeshani, A., Qiao, M., Kao, A. H., Kolsch, Y., Kumar, A., Kunze, V. P., Rasy, A. M., Richardson, R., Wekselblatt, J. B., Baier, H., Lucas, R. J., Li, W., Meister, M., Trachtenberg, J. T., Yan, W., Peng, Y.- R., Sanes, J. R., and Shekhar, K. Evolution of neuronal cell classes and types in the vertebrate retina. Nature, 624(7991):415- 424, December 2023. ISSN 1476- 4687. doi: 10.1038/s41586- 023- 06638- 9.  
+
+<|ref|>text<|/ref|><|det|>[[130, 416, 884, 460]]<|/det|>
+[5] Fisher, A. Vertical section of a chick retina 1 2008 Photomicrography Competition, 2008. URL https://www.nikonsmallworld.com/galleries/2008- photomicrography- competition/vertical- section- of- a- chick- retina.  
+
+<|ref|>text<|/ref|><|det|>[[130, 466, 884, 497]]<|/det|>
+[6] Masland, R. H. The neuronal organization of the retina. Neuron, 76(2):266- 280, October 2012. ISSN 1097- 4199. doi: 10.1016/j.neuron.2012.10.002.  
+
+<|ref|>text<|/ref|><|det|>[[130, 503, 884, 575]]<|/det|>
+[7] Yan, W., Laboulaye, M. A., Tran, N. M., Whitney, I. E., Benhar, I., and Sanes, J. R. Mouse Retinal Cell Atlas: Molecular Identification of over Sixty Amacrine Cell Types. Journal of Neuroscience, 40(27):5177- 5195, July 2020. ISSN 0270- 6474, 1529- 2401. doi: 10.1523/JNEUROSCI.0471- 20.2020. URL https://www.jneurosci.org/content/40/27/5177. Publisher: Society for Neuroscience Section: Research Articles.  
+
+<|ref|>text<|/ref|><|det|>[[130, 580, 884, 611]]<|/det|>
+[8] Wassle, H., Puller, C., Muller, F., and Haverkamp, S. Cone contacts, mosaics, and territories of bipolar cells in the mouse retina. J Neurosci, 29:106- 17, January 2009. doi: 10.1523/JNEUROSCI.4442- 08.2009.  
+
+<|ref|>text<|/ref|><|det|>[[130, 617, 884, 647]]<|/det|>
+[9] Euler, T., Haverkamp, S., Schubert, T., and Baden, T. Retinal bipolar cells: elementary building blocks of vision. Nat Rev Neurosci, 15:507- 19, August 2014.  
+
+<|ref|>text<|/ref|><|det|>[[123, 653, 884, 711]]<|/det|>
+[10] Shekhar, K., Lapan, S. W., Whitney, I. E., Tran, N. M., Macosko, E. Z., Kowalczyk, M., Adiconis, X., Levin, J. Z., Nemesh, J., Goldman, M., McCarroll, S. A., Cepko, C. L., Regev, A., and Sanes, J. R. Comprehensive Classification of Retinal Bipolar Neurons by Single- Cell Transcriptomics. Cell, 166:1308- 1323. e30, August 2016. ISSN 0092- 8674. doi: 10.1016/j.cell.2016.07.054.  
+
+<|ref|>text<|/ref|><|det|>[[123, 717, 884, 775]]<|/det|>
+[11] Kozlowski, C., Hadyniak, S. E., and Kay, J. N. Retinal neurons establish mosaic patterning by excluding homotypic somata from their dendritic territories. Cell Reports, 43(8):114615, August 2024. ISSN 2211- 1247. doi: 10.1016/j.celrep.2024.114615. URL https://www.sciencedirect.com/science/article/pii/S2211124724009653.  
+
+<|ref|>text<|/ref|><|det|>[[123, 781, 884, 811]]<|/det|>
+[12] Wassle, H., Peichl, L., and Boycott, B. B. Dendritic territories of cat retinal ganglion cells. Nature, 292:344- 5, July 1981.  
+
+<|ref|>text<|/ref|><|det|>[[123, 817, 884, 847]]<|/det|>
+[13] Rockhill, R. L., Euler, T., and Masland, R. H. Spatial order within but not between types of retinal neurons. Proc Natl Acad Sci U S A, 97:2303- 7, February 2000. doi: 10.1073/pnas.030413497.  
+
+<|ref|>text<|/ref|><|det|>[[123, 853, 884, 911]]<|/det|>
+[14] Della Santina, L., Kuo, S. P., Yoshimatsu, T., Okawa, H., Suzuki, S. C., Hoon, M., Tsuboyama, K., Rieke, F., and Wong, R. O. L. Glutamatergic Monopolar Interneurons Provide a Novel Pathway of Excitation in the Mouse Retina. Current Biology, 26(15):2070- 2077, August 2016. ISSN 0960- 9822. doi: 10.1016/j.cub.2016.06.016. URL https://www.sciencedirect.com/science/article/pii/S0960982216306558.

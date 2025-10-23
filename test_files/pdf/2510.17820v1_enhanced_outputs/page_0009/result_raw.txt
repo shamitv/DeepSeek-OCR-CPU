@@ -1,0 +1,38 @@
+<|ref|>text<|/ref|><|det|>[[115, 90, 880, 120]]<|/det|>
+inside the million dimensions of the retinal output. The same argument holds for the early stages of visual cortex, where the retinotopic map alone ensures that different neurons encode different things.  
+
+<|ref|>text<|/ref|><|det|>[[115, 125, 882, 208]]<|/det|>
+The lesson for other areas of the brain is that we may simply be ignorant about all the items represented there. It seems somehow implausible that the primary visual cortex employs a billion neurons to process the 1- million- dimensional optic nerve input, whereas the pre- frontal cortex uses a billion neurons to represent the dynamics of just 3 variables. Obviously, any single behavioral experiment that only involves a handful of variables cannot bring out the richness of the neural representation. We would not have arrived at the present understanding of retinal coding by using exclusively low- dimensional stimuli.  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 227, 325, 245]]<|/det|>
+## 9 Theories of the retina  
+
+<|ref|>text<|/ref|><|det|>[[115, 258, 882, 314]]<|/det|>
+A major remaining remaining challenge is to understand where the Standard Model comes from. By analogy to particle physics, we now know what all the particles are, namely the cell types. We also know about the forces between particles: the synaptic interactions. Also we believe that all phenomenology of retinal function ultimately traces back to those cell types and their interactions. But we don't have a theory of why the cell types are what they are.  
+
+<|ref|>text<|/ref|><|det|>[[115, 320, 882, 363]]<|/det|>
+In the case of particle physics, there may be no ultimate explanation: The present pantheon of particles may just boil down to a random parameter setting in the initial Big Bang. In the case of retinal structure and function, we expect that there is a deeper explanation related to evolution, with natural selection favoring one type of structure over others.  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 379, 435, 394]]<|/det|>
+### 9.1 Efficient coding vs selective computation  
+
+<|ref|>text<|/ref|><|det|>[[115, 404, 882, 460]]<|/det|>
+Today, the dominant normative framework for the retina is efficient coding theory [94- 96]. It postulates that the optic nerve is a bottleneck for visual information, and the retina reformats the raw image from photoreceptors so it can pass through the bottleneck. This involves removing redundancy in the visual signal that results from the dominance of low frequencies (both spatial and temporal) within natural scenes.  
+
+<|ref|>text<|/ref|><|det|>[[115, 466, 882, 536]]<|/det|>
+This theory has been very successful at explaining some qualitative features of retinal processing: lateral inhibition in space, temporal band- pass filtering, and the split into On and Off pathways. But it fails to account for the large diversity of cell types among retinal ganglion cells. Redundancy reduction really recommends just two GC types - one On one Off - with a spatio- temporal receptive field adapted to the natural scene statistics. Instead we have about 40 GC types. How to explain this discrepancy?  
+
+<|ref|>text<|/ref|><|det|>[[115, 542, 882, 625]]<|/det|>
+On a larger scale, one might say that the visual system is more concerned with discarding information than preserving it. Our perceptual system ultimately extracts only about 10 bits per second from the visual image, whereas the capacity of the cone photoreceptors is about \(10^{9}\) bits/s [97]. Whitting the information down by 8 log units is a massive challenge, and it seems likely that the retina takes a first cut in discarding information that will not ultimately be used. Thus it may be more useful to treat retinal processing as selective computation with loss of information, rather than focusing on efficient coding.  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 641, 387, 657]]<|/det|>
+### 9.2 Why so many ganglion cell types?  
+
+<|ref|>text<|/ref|><|det|>[[115, 666, 882, 750]]<|/det|>
+Still this leaves open the puzzle of the many cell types. One attractive hypothesis here is that each ganglion cell type precomputes a certain visual feature that can be used directly for a specific behavioral need. For example, a molecularly identified type of ganglion cell in the mouse responds to slow image motion on the retina. These neurons project specifically to the accessory optic system, a set of nuclei implicated in measuring retinal slip of the visual image and controlling eye movements to compensate [98]. This neuron type appears to solve a special function to support active vision.  
+
+<|ref|>text<|/ref|><|det|>[[115, 756, 882, 853]]<|/det|>
+In other cases, however, the connection between visual behaviors and retinal function is more complicated. For example, the looming reaction of the mouse is a very robust visual behavior, by which the animal escapes from an approaching aerial predator [99]. Certain ganglion cells in the mouse retina that are sensitive to dark expanding objects [78, 100, 101]. But those neurons also respond to many other stimuli, like flashed objects, unlike the behavioral looming reaction [73]. Furthermore, signals from different GC types hardly remain separate, but get combined already via synaptic convergence in the thalamus and superior colliculus [102]. Thus, the observed precision and selectivity of the looming reaction and other visual behaviors likely relies on the downstream combination of multiple retinal channels [103].  
+
+<|ref|>text<|/ref|><|det|>[[115, 859, 882, 901]]<|/det|>
+In summary, a useful theory of the retina will need to explain the great diversity of the many output channels and also the specific stimulus features that they represent. If successful, this will illuminate the principles of neural processing in downstream visual areas as well.

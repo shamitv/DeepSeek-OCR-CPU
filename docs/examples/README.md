@@ -17,17 +17,25 @@ Example output from standard PDF processing, showing:
 **Source:** "The Standard Model of the Retina" by Markus Meister (arXiv 2510.17820v1, 16 pages)
 
 ### Enhanced PDF Processing Output
-**Directory:** `enhanced_pdf_demo_output/`  
+**Directory:** `2510.19670v1_enhanced_outputs/`  
 **Demo Document:** [ENHANCED_PDF_DEMO_EXAMPLE.md](../ENHANCED_PDF_DEMO_EXAMPLE.md)
 
 Example output from **enhanced PDF processing** (Phase 2 implementation), showing:
-- ✨ Individual element extraction as separate images
+- ✨ Individual element extraction as separate images (289 elements)
 - ✨ Element metadata JSON files with bounding boxes and metrics
 - ✨ Type-specific visualization overlays (titles only, text only, all types colored)
 - ✨ Raw model output with grounding references
+- ✨ Image + caption association (automatic linking)
+- ✨ Table extraction with captions and structure preservation
+- ✨ Complex page handling (multiple images, tables, equations per page)
 - All standard outputs (markdown, annotated images, etc.)
 
-**Source:** "Semi-analytical pricing of American options with hybrid dividends" by Andrey Itkin (arXiv 2510.18159v1, 4 pages processed)
+**Source:** "CoSense-LLM: Semantics-at-the-Edge" by Hasan Akgul et al. (arXiv 2510.19670v1, 19 pages, 289 elements)
+
+**Highlights:**
+- Page 6: Diagram with caption extraction
+- Page 14: 2 charts + 2 tables with all captions
+- Pages 13-16: Complex data visualization section
 
 ## Output Structure Comparison
 
@@ -43,9 +51,11 @@ pdf_demo_output/
 └── ...
 ```
 
-### Enhanced Output (`enhanced_pdf_demo_output/`)
+### Enhanced Output (`2510.19670v1_enhanced_outputs/`)
 ```
-enhanced_pdf_demo_output/
+2510.19670v1_enhanced_outputs/
+├── 2510.19670v1.md                # Combined markdown
+├── document_structure.json        # NEW: Document metadata
 ├── pages/                         # Page images
 ├── page_0001/
 │   ├── result.mmd                 # Page markdown
@@ -63,6 +73,22 @@ enhanced_pdf_demo_output/
 │   │   ├── all_types_colored.jpg
 │   │   └── ...
 │   └── images/                    # Extracted figures
+├── page_0006/                     # Diagram with caption
+│   ├── elements/
+│   │   ├── page_0001_elem_0000_image.jpg
+│   │   ├── page_0001_elem_0001_image_caption.jpg
+│   │   └── ...
+├── page_0014/                     # Charts + tables
+│   ├── elements/
+│   │   ├── page_0001_elem_0000_image.jpg        # Chart 1
+│   │   ├── page_0001_elem_0001_image_caption.jpg
+│   │   ├── page_0001_elem_0002_image.jpg        # Chart 2
+│   │   ├── page_0001_elem_0007_table.jpg        # Table 1
+│   │   ├── page_0001_elem_0008_table_caption.jpg
+│   │   └── ...
+│   └── images/
+│       ├── 0.jpg                  # Chart extraction 1
+│       └── 1.jpg                  # Chart extraction 2
 └── ...
 ```
 
@@ -75,12 +101,19 @@ enhanced_pdf_demo_output/
 - **Figures:** 2 extracted
 
 ### Enhanced Output
-- **Size:** ~28 MB (includes individual element images)
-- **Pages:** 4 (partial document)
-- **Elements:** 22 individually extracted (1 title, 1 subtitle, 20 text blocks)
-- **Element Images:** 22 JPG files
-- **Metadata Files:** 22 JSON files
-- **Overlays per Page:** 4 visualization images
+- **Size:** ~85 MB
+- **Pages:** 19 (full document)
+- **Elements:** 289 individually extracted
+  - 201 text blocks
+  - 58 subtitles
+  - 8 images with captions
+  - 3 tables with captions
+  - 6 equations
+  - 1 title
+- **Element Images:** 289 JPG files
+- **Metadata Files:** 289 JSON files
+- **Overlays:** 76+ visualization images
+- **Figures Extracted:** 8 (with automatic caption linking)
 
 ## Usage
 
