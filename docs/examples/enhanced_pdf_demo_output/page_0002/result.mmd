@@ -1,0 +1,20 @@
+
+yield, is ill- suited for handling large, discrete dividends. This limitation has driven decades of research into more sophisticated models, which generally fall into two categories: those that modify the underlying stock price process and those that develop numerical techniques to solve the ensuing free boundary problem.  
+
+
+Due to the vast existing literature, we provide a focused survey organized by the underlying methodology for treating discrete dividends. This review traces the field's evolution from its analytical origins to current numerical techniques. We direct the reader to the cited references for a comprehensive bibliography.  
+
+
+Compound option approach & Escrowed dividend models. One of the earliest and most influential contributions was made by [Roll, 1977; Geske, 1979; Whaley, 1981] for pricing American calls. Their solution, often termed the Roll- Geske- Whaley (RGW) formula, treats an American call on a stock with a single discrete dividend as a compound option. The option to exercise just before the dividend is viewed as an option on another option expiring at the ex- date. While elegant and analytical, the RGW model is limited to a single dividend and only applies to calls, as early exercise of puts is optimal at other times. A common simplification, the Escrowed Dividend Models, adjusts the initial stock price by subtracting the present value of all future dividends. This model is simple to implement but is known to systematically misprice options, particularly those deep in- or out- of- the- money, as it fails to accurately capture the diffusion of the stochastic process around the known jump.  
+
+
+Lattice- Based Methods (Trees). Lattice methods, particularly binomial and trinomial trees pioneered by [Cox, Ross, and Rubinstein, 1979] offer a more flexible numerical framework. The primary challenge is modifying the tree to account for the discrete dividend drop. Two main approaches have emerged:  
+
+
+- The "Lump-Sum" approach. The tree is built based on the stochastic process of the underlying stock, and at an ex-dividend date, the value at each node is reduced by the dividend amount. This simple method can lead to computational issues, as nodes may fall below zero for large dividends, violating the lognormal assumption.- The "Shift" approach suggested by [Bos and Vandermark, 2002; Haug, Haug, and Lewis, 2003]. The tree is constructed for the "stochastic" component of the stock price (i.e., the stock price minus the present value of future dividends). The known, deterministic dividend payments are then added back at each node. This approach avoids negative probabilities and is generally considered more robust and accurate, forming the basis for many modern implementations.  
+
+
+Partial differential equation and finite- difference methods. The PDE framework, rooted in the fundamental Black- Scholes differential equation, provides a powerful alternative. The problem becomes solving a PDE with a free boundary (the optimal exercise boundary) and a jump condition at each ex- dividend date. The value of the option immediately before the dividend date, \(V(S(t_{d}^{- }), t_{d}^{- })\) , must be equal to the value immediately after, \(V(S(t_{d}^{+}) - D, t_{d}^{+})\) , where \(D\) is the dividend amount. Numerical methods like finite differences are used to solve this system, often providing greater accuracy and convergence properties than trees for a given computational cost. In more detail, see [Wilmott, Dewynne, and Howison, 1993; Hirsa, 2013; Chiarella, El- Hassan, and Kucera, 2006; Itkin, 2017; Andersen, 2025] and references therein.  
+
+
+Monte- Carlo methods. Monte- Carlo simulation for American options relies on a Lest- Square method (LSMC) proposed in [Longstaff and Schwartz, 2001] and various more recent modifications. Handling discrete dividends in LSMC methods involves adjusting the stock price paths at ex- dates and has become a popular method for high- dimensional problems where trees and PDEs become impractical.
