@@ -1,0 +1,32 @@
+<|ref|>sub_title<|/ref|><|det|>[[115, 88, 520, 106]]<|/det|>
+## 4 Biological ingredients of the Standard Model  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 119, 207, 134]]<|/det|>
+### 4.1 The eye  
+
+<|ref|>text<|/ref|><|det|>[[115, 144, 882, 215]]<|/det|>
+The standard model largely treats the eye as a camera that converts the external light field into an intensity pattern on the retina. In many experiments that contributed to the standard model, the eye was removed and images were projected directly on the retina. Of course, for a full account of real- world vision, the details of ocular function matter. This includes the deviations from the ideal camera model, like chromatic aberration, axial aberrations, and stochastic eye movements.  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 231, 211, 245]]<|/det|>
+### 4.2 Neurons  
+
+<|ref|>text<|/ref|><|det|>[[115, 255, 882, 381]]<|/det|>
+There are about 100 types of neuron in the retina, with recent estimates ranging to 140 [4, 7]. They are grouped into 5 classes by criteria of connectivity (Fig 1C): photoreceptors (PRs) get input from light; ganglion cells (GCs) send output through the optic nerve; bipolar cells (BCs) connect photoreceptors to ganglion cells; horizontal cells (HCs) communicate among photoreceptors and bipolar cells; amacrine cells (ACs) communicate among bipolar and ganglion cells. These neurons are organized in 3 layers of cell bodies, separated by 2 layers of synapses (Fig 1A). Within each class, one can distinguish subtypes by their shape (Fig 1B). For example, about 12 bipolar cell types differ by the precise lamination of their axons and dendrites in the two synaptic layers [8, 9]. Increasingly the classic morphological distinctions among these subtypes are also supplemented by a molecular classification based on gene expression patterns [4, 10].  
+
+<|ref|>text<|/ref|><|det|>[[115, 384, 882, 485]]<|/det|>
+Importantly, this classification of cell types is not merely a subjective choice “in the eye of the beholder” 1 , but supported by objective criteria derived from the organization of the retina. For example, neurons of the same type are spaced out within the plane of the retina so as to “tile” the space more or less uniformly. By correlating the 2- dimensional arrays of neurons in the retina, one can observe a type of “repulsion” among neurons of the same cell type (at least in some cases), but not across types [11- 13]. Another observation (in the mouse retina) is that every cone photoreceptor connects to 10 bipolar cells, of 10 different anatomical types [8]. These features of retinal organization reveal that there is biological ground truth to the cell types that have been identified. 2  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 500, 240, 514]]<|/det|>
+### 4.3 Connections  
+
+<|ref|>text<|/ref|><|det|>[[115, 524, 882, 636]]<|/det|>
+Much as the standard model of particle physics involves particles and their interactions, here we must specify neurons and their connections. The five major classes form chemical synapses, but only as allowed by the rules of Figure 1C. Along the straight- through pathway, photoreceptors can either excite or inhibit bipolar cells, and bipolar cells excite ganglion cells. 3 In addition, photoreceptors excite horizontal cells, which in turn inhibit photoreceptors, and may excite or inhibit bipolar cells. Similarly, bipolar cells excite amacrine cells, which in turn inhibit bipolar cells, other amacrine cells, and ganglion cells. 4 In addition one finds electrical connections via gap junctions, but primarily among neurons of the same type. For example, horizontal cells and certain amacrine cells form meshworks by which signals are shared laterally [15].  
+
+<|ref|>text<|/ref|><|det|>[[115, 641, 882, 740]]<|/det|>
+On a fine scale, there are precise rules that regulate which types connect to each other. The “inner plexiform layer” (Fig 1A) is a remarkable switchboard, about \(40\mu \mathrm{m}\) thick (in the mouse), free of cell bodies, and devoted entirely to the synapses between bipolar, amacrine, and ganglion cells. Here, particular connections are segregated into sublayers. For example, the dendritic trees of certain ganglion cells occupy a precise lamina in the IPL only \(1\mu \mathrm{m}\) thick [16, 17]. In that lamina they can make connections with only certain types of bipolar and amacrine cells [6, 18, 19]. The specific partner relationships are governed in part by the expression of cell adhesion molecules on the surface of pre- and post- synaptic cell [20, 21].  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 754, 217, 769]]<|/det|>
+### 4.4 Plasticity  
+
+<|ref|>text<|/ref|><|det|>[[115, 779, 882, 809]]<|/det|>
+The function of neurons and synapses in the retina can be modulated substantially by the history of their activity, the external stimuli, and other context, such as the time of day. Perhaps the largest effects are those of light adaptation in

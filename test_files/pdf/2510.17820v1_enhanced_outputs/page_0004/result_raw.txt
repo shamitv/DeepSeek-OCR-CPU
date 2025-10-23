@@ -1,0 +1,47 @@
+<|ref|>text<|/ref|><|det|>[[114, 90, 883, 189]]<|/det|>
+the photoreceptors, which can change the sensitivity of the light response by many log units. The biochemistry involved in retinal light adaptation is well- understood, and it can be captured effectively using a mathematical model [22–24]. Many of the chemical synapses in the retina are subject to short- term facilitation and depression, owing to the history of pre- and post- synaptic activity [25, 26]. The conductance of gap junctions between like- type neurons is controlled by certain neuromodulators, and this can fundamentally alter the degree of lateral signal flow in the retina [27]. In this way the input- output relationship of the retina is not a static target, but may vary considerably on time scales from tenths of a second to a day.  
+
+<|ref|>sub_title<|/ref|><|det|>[[115, 206, 656, 224]]<|/det|>
+## 5 The response function of ganglion cells in the standard model  
+
+<|ref|>text<|/ref|><|det|>[[114, 237, 883, 334]]<|/det|>
+On the basis of these ingredients, the standard model develops the input- output function of the retina, by which one can predict the response of a retinal ganglion cell based on the visual stimulus presented to the eye. The canonical form for this response function is the "rectified subunit model" [28–33]. It postulates that the output of photoreceptors branches into multiple parallel pathways, which correspond to different bipolar cell types. The ganglion cell, in turn, recombines input from these parallel pathways by summing over bipolar cell outputs. Crucially, the output of each bipolar cell can be rectified, owing to the non- linearity of transfer at the bipolar cell synapse. Thus, each bipolar cell becomes a "rectified subunit" of the ganglion cell's visual receptive field.  
+
+<|ref|>text<|/ref|><|det|>[[114, 339, 883, 369]]<|/det|>
+Mathematically, one can formulate the model as follows. We start with the visually driven input experienced by a bipolar cell of type \(i\) located at position \(\vec{x}\) on the retina:  
+
+<|ref|>equation<|/ref|><|det|>[[323, 384, 882, 417]]<|/det|>
+\[B_{i}(\vec{x},t) = \int_{\vec{x}^{\prime},t^{\prime}}K_{i}\left(\vec{x}^{\prime} - \vec{x},t^{\prime} - t\right)S\left(\vec{x}^{\prime},t^{\prime}\right)\mathrm{d}^{2}x^{\prime}\mathrm{d}t^{\prime} \quad (1)\]  
+
+<|ref|>text<|/ref|><|det|>[[114, 426, 883, 457]]<|/det|>
+where \(S\left(\vec{x}^{\prime},t^{\prime}\right)\) is the light stimulus at point \(\vec{x}^{\prime}\) and time \(t^{\prime}\) . The response kernel \(K_{i}\left(\vec{x}^{\prime} - \vec{x},t^{\prime}- t\right)\) spells out how a bipolar cell of type \(i\) located at position \(\vec{x}\) on the retina weights the stimulus at point \(\vec{x}^{\prime}\) and time \(t^{\prime}\) .  
+
+<|ref|>text<|/ref|><|det|>[[115, 462, 653, 478]]<|/det|>
+At the next stage, a ganglion cell of type \(j\) pools the outputs of many bipolar cells:  
+
+<|ref|>equation<|/ref|><|det|>[[340, 493, 882, 527]]<|/det|>
+\[G_{j}(\vec{x},t) = \sum_{i}\sum_{\vec{x}^{\prime}}w_{ji}\left(\vec{x}^{\prime} - \vec{x}\right)N_{ji}\left(B_{i}(\vec{x}^{\prime},t)\right) \quad (2)\]  
+
+<|ref|>text<|/ref|><|det|>[[114, 536, 883, 580]]<|/det|>
+Here \(w_{ji}\left(\vec{x}^{\prime} - \vec{x}\right)\) is the weight by which a BC of type \(i\) at location \(\vec{x}^{\prime}\) contributes to a GC of type \(j\) at location \(\vec{x}\) . The function \(N_{ji}\left(\right)\) represents the non- linearity of transmission from BC type \(i\) to GC type \(j\) . Typically this is modeled as a simple rectifying function or a sigmoid [29, 33].  
+
+<|ref|>text<|/ref|><|det|>[[114, 584, 883, 669]]<|/det|>
+Where do the other neuronal classes fit into this scheme? Horizontal and amacrine cells contribute by shaping the responses of bipolar cells. For example, a typical bipolar cell kernel \(K_{i}\left(\vec{x}^{\prime} - \vec{x},t' - t\right)\) includes an antagonistic surround region, which results from lateral signal flow in the horizontal and amacrine networks. Similarly, the transient kinetics of the typical bipolar cell kernel are shaped in part by negative feedback from amacrine cells onto the bipolar cell terminal. Many applications of the rectified subunit model leave it at that (Eqn 2), without an explicit modeling of amacrine or horizontal cells.  
+
+<|ref|>text<|/ref|><|det|>[[114, 674, 883, 704]]<|/det|>
+In other cases, it is necessary to include inhibition from amacrine cells directly [34–37]. Because amacrines also pool over bipolar cell inputs, one can model their response like that of ganglion cells,  
+
+<|ref|>equation<|/ref|><|det|>[[341, 718, 882, 751]]<|/det|>
+\[A_{k}(\vec{x},t) = \sum_{i}\sum_{\vec{x}^{\prime}}u_{ki}\left(\vec{x}^{\prime} - \vec{x}\right)L_{ki}\left(B_{i}(\vec{x}^{\prime},t)\right) \quad (3)\]  
+
+<|ref|>text<|/ref|><|det|>[[114, 760, 453, 775]]<|/det|>
+and then add their output to the ganglion cell signal  
+
+<|ref|>equation<|/ref|><|det|>[[208, 789, 882, 824]]<|/det|>
+\[G_{j}(\vec{x},t) = \sum_{i}\underset {\vec{x}^{\prime}}{\sum}w_{ji}\left(\vec{x}^{\prime} - \vec{x}\right)N_{j i}\left(B_{i}(\vec{x}^{\prime},t)\right) + \sum_{k}\underset {\vec{x}^{\prime\prime}}{\sum}v_{jk}\left(\vec{x}^{\prime \prime} - \vec{x}\right)M_{j i}\left(A_{k}(\vec{x}^{\prime \prime},t)\right) \quad (4)\]  
+
+<|ref|>text<|/ref|><|det|>[[113, 833, 883, 862]]<|/det|>
+Here \(u_{ki}\) and \(L_{ki}\left(\right)\) are the weights and nonlinearities of synapses from BCs to ACs, and likewise \(v_{ki}\) and \(M_{ki}\left(\right)\) for synapses from ACs to GCs.  
+
+<|ref|>text<|/ref|><|det|>[[114, 867, 883, 911]]<|/det|>
+Modeling using this full generality (Eqn 4) is rare. For example, many applications assume a simple common form for all the rectifying nonlinearities (e.g. \(N_{ji}\left(\right)\) in Eqn 2), but there are known occasions where a finer distinction is needed. For example the synaptic output of ON bipolar cells tends to be more linear than for OFF bipolars [38, 39].
